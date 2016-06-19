@@ -1,4 +1,4 @@
-#import requests
+import os
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify
 
 from the500days import app
@@ -15,5 +15,4 @@ if __name__ == '__main__':
 
     # heroku
     port = int(os.environ.get('PORT',5000))
-    app.run(debug=True)
-    #app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port)
