@@ -2,7 +2,7 @@
 virtualenv venv
 . venv/bin/activate
 pip install -r requirements.txt
-python runserver.py
+python app.py
 
 
 # For Heroku
@@ -11,8 +11,11 @@ source venv/bin/activate
 pip install flask (no sudo needed)
 pip install gunicorn
 pip freeze > requirements.txt
--> Add psycopg2 to the end of requirements.txt
+echo 'psycopg2' >> requirements.txt
+echo 'requests' >> requirements.txt
 heroku create
 git push heroku master -f
 heroku ps:scale web=1
 heroku open
+
+heroku local web
