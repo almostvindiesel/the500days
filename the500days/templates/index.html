@@ -65,7 +65,7 @@
 
     <!-- Header -->
     <a name="about"></a>
-        <div class="intro-header"data-speed="14" data-type="background">
+        <div class="intro-header "data-speed="14" data-type="background">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -92,24 +92,25 @@
     </div>
     <!-- /.intro-header -->
 
-    <!-- About -->
-    <section id="about" class="about">
+   <section id="about" class="about">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center aboutintro">
                     <br>
-                    <h1> Following the Sun ... and Us!</h1>
+                    <h1> {{ num_days_into_trip }} Days of Sunshine (and counting!)</h1>
                     <hr class="intro-divider">
                     <h4 >We're a <a target='_blank' href=https://www.linkedin.com/pub/joanne-villanueva/a1/b0a/b82>JD</a>
                         and a <a target='_blank' href=https://www.linkedin.com/in/johnmarsland>Techie</a> who left California
-                        to follow the sun worldwide for 500 days.</h4>
+                        to follow the sun worldwide for 500 days. Now we're in {{ current_city }}!</h4><br>
+                    <h4>The best way to join our adventure is to follow 
+                        
+                    <a target='_blank' href=https://instagram.com/joannevillanueva/>@joannevillanueva's</a> daily posts on Instagram:
+                    <br><br>
+                    <a target='_blank' href=https://instagram.com/joannevillanueva/><img src=/static/img/instagram-blue.png width=150></a>
+                    <br><br>
+                    Or add <a target='_blank' href=http://facebook.com/marsland>John</a> or <a target='_blank' href=http://facebook.com/joanne.g.villanueva>Joanne</a> on Facebook</h4>
 
-                    <h4>The best way to follow our adventures is to check out our 
-                    <a target='_blank' href=https://instagram.com/explore/tags/jjendlessvacay/>daily posts on Instagram</a> 
-                    (you'll need to follow <a target='_blank' href=https://instagram.com/joannevillanueva/>@joannevillanueva</a>).<br>    
-                    You can also add <a target='_blank' href=http://facebook.com/marsland>John</a> or <a target='_blank' href=http://facebook.com/joanne.g.villanueva>Joanne</a> on Facebook, or add John on whatsapp: +1.510.847.0528</h4>
-
-                    <img src=/static/img/instagram.jpg width=150>
+                    
                     <br>
                 </div>
             </div>
@@ -121,7 +122,6 @@
 
 
     <!-- Page Content -->
-
 	<a name="eu"></a>
     <div class="content-section-a">
 
@@ -132,16 +132,13 @@
                     <div class="clearfix"></div>
                     <h2 class="section-heading">Europe 2016<br></h2>
                     <p class="lead">
-                        Loosen your belt. Bring your strechy pants. And pack your Euro bathing suits. Europe is off for the summer and so 
-                        are we! 
+                        Loosen your belt. Bring your stretchy pants. Pack your Euro bathing suits. Europe is off for the summer and so are we! 
                     </p>
-                    <img src=/static/img/eu2.jpg class='country_images' width=120%>
+                    <img src=/static/img/eu2.jpg class='country_images' width=100%>
 
                 </div>
                 <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=447315632&amp;single=true&amp;widget=false&chrome=false&amp;headers=false'  width='560' height='500'></iframe>
-
-                    <!--<img class="img-responsive" src="img/ipad.png" alt="">-->
+                    <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=447315632&amp;single=true&amp;widget=false&chrome=false&amp;headers=false'  width='560' height='350'></iframe>
                 </div>
             </div>
 
@@ -163,12 +160,11 @@
                    <!-- <hr class="section-heading-spacer"> -->
                     <div class="clearfix"></div>
                     <h2 class="section-heading">Southeast Asia 2015-2016</h2>
-                    <p class="lead">Monkeying around on the world's best beaches </p>
+                    <p class="lead">Monkeying around on the world's best beaches. </p>
                     <img src=/static/img/sea.jpg width=80% class='country_images'>
                 </div>
                 <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-                    <iframe align=top src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1943952629&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='590' height='500'></iframe>
-                    <!--<img class="img-responsive" src="img/dog.png" alt="">-->
+                    <iframe align=top src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1943952629&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='590' height='450'></iframe>
                 </div>
             </div>
 
@@ -190,15 +186,14 @@
                     <!--hr class="section-heading-spacer">-->
                     <div class="clearfix"></div>
                     <h2 class="section-heading">Roadtripping National Parks 2015</h2>
-                    <p class="lead">There's no better way to glamp your way around our National Parks than with a mini-cooper convertible!</p>
+                    <p class="lead">There's no better way to glamp your way around our national parks than with a mini-cooper convertible!</p>
                     <p>
-                    <img src=/static/img/na.jpg width=120% class='country_images'>
+                    <img src=/static/img/na.jpg width=100% class='country_images'>
                     <br><br>
-                    <img src=/static/img/narrows.jpg width=120% class='country_images'></p>
+                    <img src=/static/img/narrows.jpg width=100% class='country_images'></p>
                 </div>
                 <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <br><br><iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1377601369&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='550' height='1000'></iframe>
-                    <!--<img class="img-responsive" src="img/phones.png" alt="">-->
+                    <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1377601369&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='550' height='1000'></iframe>
                 </div>
             </div>
 
