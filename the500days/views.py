@@ -17,10 +17,10 @@ from the500days import app
 @app.route('/')
 def show_entries():
     num_days_into_trip = days_into_trip()
-    current_city = call_foursquare_api()
+    location = call_foursquare_api()
 
 
-    return render_template('index.html', num_days_into_trip=num_days_into_trip, current_city=current_city)
+    return render_template('index.html', num_days_into_trip=num_days_into_trip, location=location)
 
 
 
@@ -63,7 +63,9 @@ def call_foursquare_api():
     rg = requests.get(googlemaps_url)
     geolocation_json = rg.json()
     city = geolocation_json['results'][0]['address_components'][3]['short_name']
+    country = geolocation_json['results'][0]['address_components'][5]['long_name']
     print city
+    print country
     #works print rg.text
     #print geolocation_json['results'] 
     #city = geolocation_json
@@ -76,5 +78,7 @@ def call_foursquare_api():
     uris = []
     """
 
+    location  = {'city': city, 'Age': 7, 'country': country, 'latitude': latitude, 'longitude': longitude}
 
-    return city
+
+    return location
