@@ -101,9 +101,14 @@
                     <hr class="intro-divider">
                     <h4 >We're a <a target='_blank' href=https://www.linkedin.com/pub/joanne-villanueva/a1/b0a/b82>JD</a>
                         and a <a target='_blank' href=https://www.linkedin.com/in/johnmarsland>Techie</a> who left California
-                        to follow the sun worldwide for 500 days. Now we're in 
+                        to follow the sun worldwide for 500 days. 
+
+                        {% if location %}
+                        Now we're in 
                         <a target='_blank' href='https://www.google.es/maps/@{{ location.latitude }},{{ location.longitude }},14z?hl=en'>
-                        {{ location.city }}, {{ location.country }}!</a></h4><br>
+                        {{ location.city }}, {{ location.country }}!</a></h4>
+                        <img src='{{ gmaps_url }}' align=center>
+                        {% endif %}
                     <h4>The best way to join our adventure is to follow 
                         
                     <a target='_blank' href=https://instagram.com/joannevillanueva/>@joannevillanueva's</a> daily posts on Instagram:
@@ -139,8 +144,13 @@
                     <img src=/static/img/eu2.jpg class='country_images' width=100%>
 
                 </div>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=447315632&amp;single=true&amp;widget=false&chrome=false&amp;headers=false'  width='560' height='350'></iframe>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6 ">
+                    <div class='largerdisplay'>
+                        <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=447315632&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='600' height='350'></iframe>
+                    </div>
+                    <div class='smallerdisplay'>
+                        <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=447315632&amp;single=true&amp;widget=false&chrome=false&amp;headers=false&range=A1:D18' width='300' height='300'></iframe>
+                     </div>
                 </div>
             </div>
 
@@ -161,12 +171,17 @@
                 <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
                    <!-- <hr class="section-heading-spacer"> -->
                     <div class="clearfix"></div>
-                    <h2 class="section-heading">Southeast Asia 2015-2016</h2>
+                    <h2 class="section-heading">Southeast Asia 2015-2016: DONE</h2>
                     <p class="lead">Monkeying around on the world's best beaches. </p>
                     <img src=/static/img/sea.jpg width=80% class='country_images'>
                 </div>
                 <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-                    <iframe align=top src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1943952629&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='590' height='450'></iframe>
+                    <div class='largerdisplay'>
+                         <iframe align=top src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1943952629&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='590' height='450'></iframe>
+                    </div>
+                    <div class='smallerdisplay'>
+                         <iframe align=top src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1943952629&amp;single=true&amp;widget=false&chrome=false&amp;headers=false&range=A1:D18' width='300' height='450'></iframe>
+                    </div>
                 </div>
             </div>
 
@@ -187,7 +202,7 @@
                 <div class="col-lg-5 col-sm-6">
                     <!--hr class="section-heading-spacer">-->
                     <div class="clearfix"></div>
-                    <h2 class="section-heading">Roadtripping National Parks 2015</h2>
+                    <h2 class="section-heading">Roadtripping National Parks 2015: DONE</h2>
                     <p class="lead">There's no better way to glamp your way around our national parks than with a mini-cooper convertible!</p>
                     <p>
                     <img src=/static/img/na.jpg width=100% class='country_images'>
@@ -195,7 +210,12 @@
                     <img src=/static/img/narrows.jpg width=100% class='country_images'></p>
                 </div>
                 <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1377601369&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='550' height='1000'></iframe>
+                    <div class='largerdisplay'>
+                         <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1377601369&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='550' height='900'></iframe>
+                    </div>
+                    <div class='smallerdisplay'>
+                         <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1377601369&amp;single=true&amp;widget=false&chrome=false&amp;headers=false&range=A1:D44' width='300' height='900'></iframe>
+                    </div>
                 </div>
             </div>
 

@@ -223,3 +223,13 @@ p.copyright {
     color: #333;
     background-color: rgba(255,255,255,0.8);
 }
+
+@media all and (min-width: 400px) {
+    .largerdisplay{display:block;}
+    .smallerdisplay{display:none;}
+}
+
+@media all and (max-width: 400px) {
+    .smallerdisplay{display:block;}
+    .largerdisplay{display:none;}
+}
