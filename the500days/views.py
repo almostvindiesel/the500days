@@ -61,7 +61,7 @@ def get_location_from_last_foursquare_checkin():
         check_in_ordered_dict = xmltodict.parse(check_in_xml)
         check_in_json = json.dumps(check_in_ordered_dict['rss']['channel']['item'][0], indent=4)
 
-        location  = check_in_ordered_dict['rss']['channel']['item'][0]['title']
+        venue  = check_in_ordered_dict['rss']['channel']['item'][0]['title']
         lat_long  = check_in_ordered_dict['rss']['channel']['item'][0]['georss:point']
         lat_long_list = lat_long.split()
         latitude = lat_long_list[0]
@@ -72,9 +72,10 @@ def get_location_from_last_foursquare_checkin():
         rg = requests.get(googlemaps_url)
         geolocation_json = rg.json()
         city = geolocation_json['results'][0]['address_components'][3]['short_name']
-        country = geolocation_json['results'][0]['address_components'][5]['long_name']
+        country = geolocation_json['results'][0]['address_components'][6]['long_name']
 
-        location  = {'city': city, 'country': country, 'latitude': latitude, 'longitude': longitude}
+        # !!! add venue to 500 days, too!
+        location  = {'city': city, 'country': country, 'latitude': latitude, 'longitude': longitude, 'venue': venue}
     except:
         print("Problem getting location from foursquare api")
         location  = None
