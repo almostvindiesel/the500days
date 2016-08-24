@@ -86,7 +86,7 @@ def get_location_from_last_foursquare_checkin():
                     country = datums['long_name']
                     print "--- From Google Lat Long API, Country: ", country
 
-            location = {'city': city, 'country': country, 'latitude': latitude, 'longitude': longitude, 'venue': venue}
+            #location = {'city': city, 'country': country, 'latitude': latitude, 'longitude': longitude, 'venue': venue}
 
         except Exception as e:
             print "Could not get data from google api: ", e.message, e.args
@@ -98,7 +98,5 @@ def get_location_from_last_foursquare_checkin():
         city = None
         country = None
 
-    #location = {'city': None, 'country': None, 'latitude': latitude, 'longitude': longitude, 'venue': venue}
-
-
+    location = {'city': city, 'country': country, 'latitude': latitude, 'longitude': longitude, 'venue': venue}
     return location
