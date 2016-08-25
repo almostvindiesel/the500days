@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os
 import datetime
 import random
@@ -9,6 +12,9 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 from datetime import date,timedelta
 from werkzeug.utils import secure_filename
 requests.packages.urllib3.disable_warnings()
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 from the500days import app
 
@@ -76,8 +82,12 @@ def get_location_from_last_foursquare_checkin():
         print "Gettng location data from google maps api : \r\n", googlemaps_url
 
         try: 
+            r.encoding = 'ISO-8859-1'
+            print "Encoding before: ", r.encoding
             r = requests.get(googlemaps_url)
             g_json = r.json()
+            print "Encoding after: ", r.encoding
+
             for datums in g_json['results'][0]['address_components']:
                 if datums['types'][0] == 'locality':
                     city = datums['long_name']
@@ -85,11 +95,13 @@ def get_location_from_last_foursquare_checkin():
                 if datums['types'][0] == 'country':
                     country = datums['long_name']
                     print "--- From Google Lat Long API, Country: ", country
-
             #location = {'city': city, 'country': country, 'latitude': latitude, 'longitude': longitude, 'venue': venue}
 
         except Exception as e:
             print "Could not get data from google api: ", e.message, e.args
+            print "Datum key threw exception: ", datums['types'][0]
+            print "Datum value which threw exception: ",  datums['long_name']
+
             city = None
             country = None
 
