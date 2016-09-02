@@ -4,6 +4,42 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
+a.gallerypic{
+  /*
+  width:140px;
+  text-decoration:none;
+  position:relative; 
+  border:0px solid #666;
+  display:block;
+  */
+  position:relative;
+  text-align: center;
+}
+
+a.gallerypic span.zoom-icon{
+  left:68%;
+  top:150%;
+  position:absolute;
+
+    /*
+  position:absolute;
+  visibility:visible;
+  visibility:hidden;
+  filter:alpha(opacity=20);
+  -moz-opacity:0.5;
+  -khtml-opacity: 0.5;
+  opacity: 0.5;
+  */
+
+}
+
+
+
+.sociallogo {
+    border-radius: 15px; 
+    height: 100px;
+    width: 100px;
+}
 
 a:link    { color: #5f3cee;}       /* unvisited link */
 a:visited { color: #5f3cee;}    /* visited link */

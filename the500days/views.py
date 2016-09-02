@@ -13,10 +13,11 @@ from datetime import date,timedelta
 from werkzeug.utils import secure_filename
 requests.packages.urllib3.disable_warnings()
 import sys
+from the500days import app
+
+# Required for correct utf8 encoding calls from heroku
 reload(sys)
 sys.setdefaultencoding("utf-8")
-
-from the500days import app
 
 @app.route('/500days')
 @app.route('/')
@@ -58,7 +59,6 @@ def get_location_from_last_foursquare_checkin():
 
 	#Get Last Checked-In Data
     try:
-        #raise Exception('spam', 'eggs')
         foursquare_url = 'https://feeds.foursquare.com/history/6e67d1fa352b2bd8480c98adcf91d2a4.rss'
         print "Gettng data from foursquare api: \r\n", foursquare_url
 
@@ -79,14 +79,11 @@ def get_location_from_last_foursquare_checkin():
 
         #Get City from Google Maps API
         googlemaps_url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false" % (latitude, longitude)
-        print "Gettng location data from google maps api : \r\n", googlemaps_url
+        print "Getting location data from google maps api : \r\n", googlemaps_url
 
         try: 
-            r.encoding = 'ISO-8859-1'
-            print "Encoding before: ", r.encoding
             r = requests.get(googlemaps_url)
             g_json = r.json()
-            print "Encoding after: ", r.encoding
 
             for datums in g_json['results'][0]['address_components']:
                 if datums['types'][0] == 'locality':
@@ -95,7 +92,6 @@ def get_location_from_last_foursquare_checkin():
                 if datums['types'][0] == 'country':
                     country = datums['long_name']
                     print "--- From Google Lat Long API, Country: ", country
-            #location = {'city': city, 'country': country, 'latitude': latitude, 'longitude': longitude, 'venue': venue}
 
         except Exception as e:
             print "Could not get data from google api: ", e.message, e.args
