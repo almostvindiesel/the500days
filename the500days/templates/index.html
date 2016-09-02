@@ -132,7 +132,12 @@
                         {% endif %}
                         <br><br>
                         {% if location.city and location.country %}
-                            <img src='{{ gmaps_url }}' align=center>
+                            <div class=largerdisplay>
+                                <img src='{{ gmaps_url }}' align=center width=500>
+                            </div>
+                            <div class=smallerdisplay>
+                                <img src='{{ gmaps_url }}' align=center width=275>
+                            </div>
                         {% endif %}
 
                     </h4>
