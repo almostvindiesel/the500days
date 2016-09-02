@@ -103,33 +103,39 @@
                         and a <a target='_blank' href=https://www.linkedin.com/in/johnmarsland>Techie</a> who left California
                         to follow the sun worldwide for 500 days. 
 
+
+
+                        The best way to follow our trip is to add <a target='_blank' href=https://instagram.com/joannevillanueva/>@joannevillanueva</a> on Instagram.  Or add <a target='_blank' href=http://facebook.com/joanne.g.villanueva>Joanne</a> or <a target='_blank' href=http://facebook.com/marsland>John</a> on Facebook.
+
+
+                    <h4>
+                        <a target='_blank' href=https://instagram.com/joannevillanueva/><img src=/static/img/instagram-logo.png class='sociallogo'></a>
+                    
+                        <a center target='_blank' href=http://facebook.com/joannevillanueva class="gallerypic" title="">
+                          <img src='/static/img/fb-joanne.png' class="sociallogo" />
+                          <span class="zoom-icon">
+                              <img src='/static/img/fb-logo-white.png' width="22" height="22">
+                          </span>
+                        </a>
+
+                        <a center target='_blank' href=http://facebook.com/marsland class="gallerypic" title="">
+                          <img src='/static/img/fb-john.png' class="sociallogo" />
+                          <span class="zoom-icon">
+                              <img src='/static/img/fb-logo-white.png' width="22" height="22">
+                          </span>
+                        </a>
+                        <br><br>
                         {% if location.city and location.country %}
                             Now we're in 
                             <a target='_blank' href='https://www.google.es/maps/@{{ location.latitude }},{{ location.longitude }},14z?hl=en'>
-                            {{ location.city }}, {{ location.country }}!</a></h4>
+                            {{ location.city }}, {{ location.country }}!</a>
+                        {% endif %}
+                        <br><br>
+                        {% if location.city and location.country %}
                             <img src='{{ gmaps_url }}' align=center>
                         {% endif %}
-                    <h4>
-                        The best way to follow our trip is to add <a target='_blank' href=https://instagram.com/joannevillanueva/>@joannevillanueva</a> on Instagram:
-                    </h4>
-                    <a target='_blank' href=https://instagram.com/joannevillanueva/><img src=/static/img/instagram-logo.png class='sociallogo'></a>
-                   
-                    <h4>
-                        Or add <a target='_blank' href=http://facebook.com/joanne.g.villanueva>Joanne</a> or <a target='_blank' href=http://facebook.com/marsland>John</a> on Facebook:
-                    </h4>
-                    <a center target='_blank' href=http://facebook.com/joannevillanueva class="gallerypic" title="">
-                      <img src='/static/img/fb-joanne.png' class="sociallogo" />
-                      <span class="zoom-icon">
-                          <img src='/static/img/fb-logo-white.png' width="30" height="30">
-                      </span>
-                    </a>
 
-                    <a center target='_blank' href=http://facebook.com/marsland class="gallerypic" title="">
-                      <img src='/static/img/fb-john.png' class="sociallogo" />
-                      <span class="zoom-icon">
-                          <img src='/static/img/fb-logo-white.png' width="32" height="30">
-                      </span>
-                    </a>
+                    </h4>
 
 
                     <br>

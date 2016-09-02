@@ -34,7 +34,7 @@ def get_static_google_map(location):
     lat = location['latitude']
     long = location['longitude']
     api_key = 'AIzaSyDoemInMQhCNVqELI9R58ass8f7MnzvjPM' 
-    gmaps_url = 'https://maps.googleapis.com/maps/api/staticmap?center=%s,%s&zoom=4&size=200x100&maptype=roadmap&markers=color:red%%7Clabel:X%%7C%s,%s&key=%s' % (lat, long, lat, long, api_key)
+    gmaps_url = 'https://maps.googleapis.com/maps/api/staticmap?center=%s,%s&zoom=6&size=400x300&maptype=roadmap&markers=color:red%%7C%s,%s&key=%s' % (lat, long, lat, long, api_key)
     #print ("Problem getting map from gmaps api")
     return gmaps_url
 

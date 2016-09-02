@@ -17,8 +17,8 @@ a.gallerypic{
 }
 
 a.gallerypic span.zoom-icon{
-  left:68%;
-  top:150%;
+  left:58%;
+  top:85%;
   position:absolute;
 
     /*
@@ -36,9 +36,9 @@ a.gallerypic span.zoom-icon{
 
 
 .sociallogo {
-    border-radius: 15px; 
-    height: 100px;
-    width: 100px;
+    border-radius: 8px; 
+    height: 60px;
+    width: 60px;
 }
 
 a:link    { color: #5f3cee;}       /* unvisited link */
