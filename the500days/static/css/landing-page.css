@@ -4,6 +4,14 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
+/* Photo Slider CSS */
+
+figure { 
+    display: inline;
+    border-radius: 5px solid;
+}
+
+
 a.gallerypic{
   /*
   width:140px;

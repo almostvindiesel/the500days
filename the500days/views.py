@@ -26,9 +26,16 @@ def show_entries():
 
     num_days_into_trip = days_into_trip()
     location = get_location_from_last_foursquare_checkin()
-    gmaps_url= get_static_google_map(location)
+    gmaps_url = get_static_google_map(location)
+    #instagram_data = get_insta_photos()
+
+    #insta_images= instagram_data['images']
+    #insta_locations= instagram_data['image_locations']
+    insta_images = get_insta_photos()
+
+    #print insta_locations
     
-    return render_template('index.html', num_days_into_trip=num_days_into_trip, location=location, gmaps_url=gmaps_url)
+    return render_template('index2.html', num_days_into_trip=num_days_into_trip, location=location, gmaps_url=gmaps_url, images = insta_images)
 
 def get_static_google_map(location):
     lat = location['latitude']
@@ -51,6 +58,62 @@ def days_into_trip():
 if __name__ == '__main__':    
     port = int(os.environ.get('PORT',5000))
     app.run(host='0.0.0.0', port=port)
+
+
+@app.route('/insta')
+def get_insta_photos():
+
+    access_token = '42490049.fc522f8.11667271a4984f93a7803ffdec6497cf'
+    max_id = ''
+    url = 'https://api.instagram.com/v1/users/42490049/media/recent/?access_token=%s&&max_id=%s' % (access_token, max_id)
+
+    print "\r\nGetting images from instagram api : \r\n", 
+    print url
+
+    try: 
+        r = requests.get(url)
+        r_json = r.json()
+
+        images = []
+        image_locations = []
+        for media in r_json['data']:
+            item = dict(
+                low = media['images']['low_resolution']['url'],
+                thumb = media['images']['thumbnail']['url'],
+                thumb_width = media['images']['standard_resolution']['width'],
+                thumb_height = media['images']['standard_resolution']['height'],
+                standard = media['images']['standard_resolution']['url'],
+                standard_width = media['images']['standard_resolution']['width'],
+                standard_height = media['images']['standard_resolution']['height'],
+
+                caption = media['caption']['text']#,
+
+            )
+            images.append(item) 
+
+            #print item
+            """
+             if 'location' in media:
+                if 'latitude' in media['location']:
+                    item = dict(
+                        location_name = media['location']['name'],
+                        latitude = media['location']['latitude'],
+                        longitude = media['location']['longitude']
+                    )
+                    image_locations.append(item)  
+                    print item
+            """
+            #image_locations = None
+        print "Found %s images from instagram api. Returning array" % (len(images))
+
+    except Exception as e:
+        print "-- Could not get data from instagram api: ", e.message, e.args
+        images = None
+        image_locations = None
+
+    return images
+    #return jsonify(images = images, image_locations = image_locations)
+
 
 
 #http://maps.googleapis.com/maps/api/geocode/json?latlng=41.37835625181477,2.1654902381285197&sensor=true
@@ -94,7 +157,7 @@ def get_location_from_last_foursquare_checkin():
                     print "--- From Google Lat Long API, Country: ", country
 
         except Exception as e:
-            print "Could not get data from google api: ", e.message, e.args
+            print "--- Could not get data from google api: ", e.message, e.args
             print "Datum key threw exception: ", datums['types'][0]
             print "Datum value which threw exception: ",  datums['long_name']
 
@@ -102,9 +165,12 @@ def get_location_from_last_foursquare_checkin():
             country = None
 
     except Exception as e:
-        print "Could not get data from foursquare api api: ", e.message, e.args
+        print "--- Could not get data from foursquare api api: ", e.message, e.args
         city = None
         country = None
+        latitude = None
+        longitude = None
+        venue = None
 
     location = {'city': city, 'country': country, 'latitude': latitude, 'longitude': longitude, 'venue': venue}
     return location
