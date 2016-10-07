@@ -19,3 +19,16 @@ heroku ps:scale web=1
 heroku open
 
 heroku local web
+
+
+# ############################################################ 
+Visit this link to get the access token:
+https://api.instagram.com/oauth/authorize/?client_id=fc522f8ae493478c9b83009bac960755&redirect_uri=http%3A%2F%2Fjoanneandjohn.com%2F500days&response_type=token 
+
+
+curl \-F 'client_id=CLIENT-ID' \
+    -F 'client_secret=CLIENT-SECRET' \
+    -F 'grant_type=authorization_code' \
+    -F 'redirect_uri=YOUR-REDIRECT-URI' \
+    -F 'code=CODE' \
+    https://api.instagram.com/oauth/access_token
