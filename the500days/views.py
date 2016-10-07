@@ -66,6 +66,7 @@ def get_insta_photos():
     access_token = '42490049.fc522f8.11667271a4984f93a7803ffdec6497cf'
     max_id = ''
     url = 'https://api.instagram.com/v1/users/42490049/media/recent/?access_token=%s&&max_id=%s' % (access_token, max_id)
+    # https://api.instagram.com/v1/users/42490049/media/recent/?access_token=42490049.fc522f8.11667271a4984f93a7803ffdec6497cf
 
     print "\r\nGetting images from instagram api : \r\n", 
     print url
@@ -108,8 +109,8 @@ def get_insta_photos():
 
     except Exception as e:
         print "-- Could not get data from instagram api: ", e.message, e.args
-        images = None
-        image_locations = None
+        images = []
+        image_locations = []
 
     return images
     #return jsonify(images = images, image_locations = image_locations)
