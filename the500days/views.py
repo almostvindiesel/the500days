@@ -153,9 +153,13 @@ def get_location_from_last_foursquare_checkin():
                 if datums['types'][0] == 'locality':
                     city = datums['long_name']
                     print "--- From Google Lat Long API, City: ", city
+                else:
+                    city = None
                 if datums['types'][0] == 'country':
                     country = datums['long_name']
                     print "--- From Google Lat Long API, Country: ", country
+                else: 
+                    country = None
 
         except Exception as e:
             print "--- Could not get data from google api: ", e.message, e.args
