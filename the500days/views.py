@@ -64,15 +64,15 @@ def show_entries():
     insta_images_sea_init = get_photos_from_db('2015-10-05', '2015-11-02')
     insta_images_sea_all = get_photos_from_db('2015-10-05', '2016-05-14')
     insta_images_eu_init = get_photos_from_db('2016-05-17', '2016-06-15')
-    insta_images_eu_all = get_photos_from_db('2016-05-17', '2016-10-07')
-    insta_images_rr_init = get_photos_from_db('2016-10-07', '2016-10-16')
-    insta_images_rr_all = get_photos_from_db('2016-10-07', '2016-12-31')
+    insta_images_eu_all = get_photos_from_db('2016-05-17', '2016-10-09')
+    insta_images_rr_init = get_photos_from_db('2016-10-09', '2016-10-18')
+    insta_images_rr_all = get_photos_from_db('2016-10-09', '2016-12-31')
     top_photos = get_photos_from_db('2016-05-16', '2016-06-07', get_top_images=True)
 
     #Fetch Google Maps Images with Locations
-    gmaps_us  = get_static_map_multiple_makers('2015-07-07', '2015-10-04', 4, '39.0558, -95.6890' )
+    gmaps_us  = get_static_map_multiple_makers('2015-07-07', '2015-10-04', 3, '39.0558, -95.6890' )
     gmaps_eu  = get_static_map_multiple_makers('2016-05-16', '2016-10-07', 4, '40.1209,9.0129'   )
-    gmaps_sea = get_static_map_multiple_makers('2015-10-05', '2016-05-14', 4, '10.8231,106.6297' )
+    gmaps_sea = get_static_map_multiple_makers('2015-10-05', '2016-05-14', 4, '8.8231,106.6297' )
     #gmaps_all = get_static_map_multiple_makers('2015-07-07', '2016-12-31', 1, '10.8231,106.6297' )
 
 
@@ -128,7 +128,7 @@ def get_static_map_multiple_makers(start_date, end_date, zoom, center_coords):
     locations=list(np.unique(np.array(locations)))
 
     api_key = 'AIzaSyDoemInMQhCNVqELI9R58ass8f7MnzvjPM' 
-    gmaps_url = 'https://maps.googleapis.com/maps/api/staticmap?center=%s&zoom=%s&size=460x360&maptype=roadmap&key=%s' % (center_coords, zoom, api_key)
+    gmaps_url = 'https://maps.googleapis.com/maps/api/staticmap?center=%s&zoom=%s&size=460x460&maptype=roadmap&key=%s' % (center_coords, zoom, api_key)
 
     for l in locations:
         gmaps_url = gmaps_url + '&markers=size:small|' + str(l['latitude']) + ',' + str(l['longitude'])
