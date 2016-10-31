@@ -64,7 +64,7 @@
 
     <!-- Header -->
     <a name="about"></a>
-        <div class="intro-header "data-speed="14" data-type="background">
+        <div class="intro-header "data-speed="14" data-type="background" style="background-color: #e8e5fc;">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -73,7 +73,7 @@
                             <hr class="intro-divider">
                             <ul class="list-inline intro-social-buttons">
                                 <li>
-                                    <a href="#photos" class="btn btn-dark btn-lg buttonlink"  onclick="toggleSlideShow()"> <span class="network-name">Photos</span></a>
+                                    <a href="#photos" class="btn btn-dark btn-lg buttonlink"  onclick="toggleSlideShow()"> <span class="network-name">Top Photos</span></a>
                                 </li>                                <li>
                                     <a href="#sea2" class="btn btn-dark btn-lg buttonlink"> <span class="network-name">Wind Down</span></a>
                                 </li>  
@@ -84,7 +84,7 @@
                                     <a href="#sea" class="btn btn-dark btn-lg buttonlink"> <span class="network-name">Southeast Asia</span></a>
                                 </li>
                                 <li>
-                                    <a href="#us" class="btn btn-dark btn-lg buttonlink"> <span class="network-name">Western US</span></a>
+                                    <a href="#us" class="btn btn-dark btn-lg buttonlink"> <span class="network-name">USA & CA</span></a>
                                 </li>
                             </ul>
                         </div>
@@ -103,16 +103,17 @@
                     <br>
                     <h1> {{ num_days_into_trip }} Days of Sunshine (and counting :)</h1>
                     <hr class="intro-divider">
-                    <h4 >We're a <a target='_blank' href=https://www.linkedin.com/pub/joanne-villanueva/a1/b0a/b82>JD</a>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 text-center">
+                    <h4 style="line-height: 25px;"> We're a <a target='_blank' href=https://www.linkedin.com/pub/joanne-villanueva/a1/b0a/b82>JD</a>
                         and a <a target='_blank' href=https://www.linkedin.com/in/johnmarsland>Techie</a> who left California
-                        to follow the sun worldwide for 500 days. 
+                        to follow the sun worldwide for 500 days. The best way to follow our trip is to add <a target='_blank' href=https://instagram.com/joannevillanueva/>@joannevillanueva</a> on Instagram.  Or add <a target='_blank' href=http://facebook.com/joanne.g.villanueva>Joanne</a> or <a target='_blank' href=http://facebook.com/marsland>John</a> on Facebook.
 
+                        <br><br>
 
-
-                        The best way to follow our trip is to add <a target='_blank' href=https://instagram.com/joannevillanueva/>@joannevillanueva</a> on Instagram.  Or add <a target='_blank' href=http://facebook.com/joanne.g.villanueva>Joanne</a> or <a target='_blank' href=http://facebook.com/marsland>John</a> on Facebook.
-
-
-                    <h4>
                         <a target='_blank' href=https://instagram.com/joannevillanueva/><img src=/static/img/instagram-logo.png class='sociallogo'></a>
                     
                         <a center target='_blank' href=http://facebook.com/joanne.g.villanueva class="gallerypic" title="">
@@ -128,26 +129,19 @@
                               <img src='/static/img/fb-logo-white.png' width="22" height="22">
                           </span>
                         </a>
-                        <br><br>
+                    </h4>
+                </div>
+                <div class="col-lg-4 col-sm-offset-1 text-center">
+                    <h4>
                         {% if location.city and location.country %}
                             Now we're in 
                             <a target='_blank' href='https://www.google.es/maps/@{{ location.latitude }},{{ location.longitude }},14z?hl=en'>
-                            {{ location.city }}, {{ location.country }}!</a>
+                            {{ location.city }}, {{ location.country }}!</a><br><br>
                         {% endif %}
-                        <br><br>
-                        {% if location.city and location.country %}
-                            <div class=largerdisplay>
-                                <img src='{{ gmaps_url }}' align=center width=500>
-                            </div>
-                            <div class=smallerdisplay>
-                                <img src='{{ gmaps_url }}' align=center width=275>
-                            </div>
-                        {% endif %}
+                        <img src='{{ gmaps_url }}' align=center style="width=100%; border-radius: 10px;">
 
+                        </div>
                     </h4>
-
-
-                    <br>
                 </div>
             </div>
             <!-- /.row -->
@@ -160,10 +154,9 @@
     <div class="content-section-a">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-lg-12">
                     <div class="clearfix"></div>
-                    <h2 class="section-heading">Our Latest Travel Photos</h2>
-                    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+                    <h2 class="section-heading">Most Liked Travel Photos</h2>
                     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true" >
 
                         <!-- Background of PhotoSwipe. 
@@ -227,48 +220,72 @@
                         </div>
                     </div>
 
-                    <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 80%; margin: 0 auto;">
-                        {% for item in images %}
+                    
+                    <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin: 0 auto;">
+                        {% for item in top_photos %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                <a href="{{ item.standard }}" itemprop="contentUrl" data-size="{{ item.standard_width }}x{{ item.standard_height }}">
+                                <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
                                     <img style="max-width:120px; " src="{{ item.thumb }}" itemprop="thumbnail" alt="Image description" />
                                 </a>
                                 <figcaption itemprop="caption description" style="display: none;">{{ item.caption }}</figcaption>
                             </figure>
                         {% endfor %}
                     </div>
+                    
                 </div>
             </div>
         </div>
     </div>
+
     <!-- /.content-section-a -->
 
-    <!-- Page Content -->
     <a name="sea2"></a>
-    <div class="content-section-a">
+    <div class="content-section-b">
 
         <div class="container">
-            <div class="row">
 
-                <div class="col-lg-5 col-sm-6">
-                    <!--<hr class="section-heading-spacer">-->
+            <div class="row">
+                <div class="col-lg-5 col-sm-5">
+                   <!-- <hr class="section-heading-spacer"> -->
                     <div class="clearfix"></div>
-                        <br><br>
+                    <h2 class="section-heading">Wind Down 2016</h2>
+                    <p class="lead">Beach bummin' in Bali and Down Under.</p>
                          <div class='largerdisplay'>
-                            <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=394029868&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='500' height='200'></iframe>
+                            <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=394029868&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='460' height='150'></iframe>
                         </div>
                         <div class='smallerdisplay'>
-                            <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=394029868&amp;single=true&amp;widget=false&chrome=false&amp;headers=false&range=A1:D10' width='300' height='200'></iframe>
+                            <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=394029868&amp;single=true&amp;widget=false&chrome=false&amp;headers=false&range=A1:D10' width='300' height='150'></iframe>
                          </div>
-
+                    <!--<img src=/static/img/sea.jpg width=80% class='country_images'>-->
                 </div>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6 ">
-                    <h2 class="section-heading">Wind Down 2016<br></h2>
-                    <p class="lead">
-                        Beach bummin' in Bali and Down Under.
-                    </p>
-
-                    <img src='https://scontent-tpe1-1.cdninstagram.com/t51.2885-15/e35/10375782_1710111879251774_1180760791_n.jpg' class='country_images' width=100%>
+                <br><br>
+                <div class="col-lg-7 col-sm-7">
+                    <div id='insta_images_rr_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin: 0 auto;">
+                        {% for item in insta_images_rr_init %}
+                            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
+                                    <img style="max-width:120px; " src="{{ item.thumb }}" itemprop="thumbnail" alt="Image description" />
+                                </a>
+                                <figcaption itemprop="caption description" style="display: none;">{{ item.caption }}</figcaption>
+                            </figure>
+                        {% endfor %}
+                    </div>
+                    <div id='insta_images_rr_link' >
+                        <br>
+                        <p>
+                            <a onclick="show_all_images('insta_images_rr')">See all Wind Down Photos</a>
+                        </p>
+                    </div>
+                    <div id='insta_images_rr_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                        {% for item in insta_images_rr_all %}
+                            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
+                                    <img style="max-width:120px; " src="{{ item.thumb }}" itemprop="thumbnail" alt="Image description" />
+                                </a>
+                                <figcaption itemprop="caption description" style="display: none;">{{ item.caption }}</figcaption>
+                            </figure>
+                        {% endfor %}
+                    </div>
 
                 </div>
             </div>
@@ -277,7 +294,8 @@
         <!-- /.container -->
 
     </div>
-    <!-- /.content-section-a -->
+    <!-- /.content-section-b -->
+
 
 
     <!-- Page Content -->
@@ -286,24 +304,127 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-lg-5 col-sm-6">
-                    <!--<hr class="section-heading-spacer">-->
-                    <div class="clearfix"></div>
+                <div class="col-lg-5 col-sm-5">
+                    <h2 class="section-heading">Europe 2016<br></h2>
+                    <p class="lead">
+                        Loosen your belt. Bring your stretchy pants. Pack your Euro bathing suits. Europe is off for the summer and so are we! 
+                    </p>
+                    <img src='{{ gmaps_eu }}' align=center width='100%' style="border-radius: 10px;">
+                    <br><br>
+                    <div class='largerdisplay'>
+                        <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=447315632&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='460' height='325'></iframe>
+                    </div>
+                    <div class='smallerdisplay'>
+                        <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=447315632&amp;single=true&amp;widget=false&chrome=false&amp;headers=false&range=A1:D18' width='400' height='325'></iframe>
+                    </div>
+
+                  
+                    <!--<img src='/static/img/eu2.jpg' class='country_images' width=100%>-->
+
+
+                    <!--
+
                     <h2 class="section-heading">Europe 2016<br></h2>
                     <p class="lead">
                         Loosen your belt. Bring your stretchy pants. Pack your Euro bathing suits. Europe is off for the summer and so are we! 
                     </p>
                     <img src='/static/img/eu2.jpg' class='country_images' width=100%>
-
+                    -->
                 </div>
-                <br><br>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6 ">
-                    <div class='largerdisplay'>
-                        <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=447315632&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='550' height='250'></iframe>
+                <div class="col-lg-7 col-sm-7">
+                    
+                    <!--<hr class="section-heading-spacer">-->
+                    <div class="clearfix"></div>
+                    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true" >
+
+                        <!-- Background of PhotoSwipe. 
+                             It's a separate element as animating opacity is faster than rgba(). -->
+                        <div class="pswp__bg"></div>
+
+                        <!-- Slides wrapper with overflow:hidden. -->
+                        <div class="pswp__scroll-wrap">
+
+                            <!-- Container that holds slides. 
+                                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                                Don't modify these 3 pswp__item elements, data is added later on. -->
+                            <div class="pswp__container">
+                                <div class="pswp__item"></div>
+                                <div class="pswp__item"></div>
+                                <div class="pswp__item"></div>
+                            </div>
+
+                            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+                            <div class="pswp__ui pswp__ui--hidden" >
+
+                                <div class="pswp__top-bar">
+
+                                    <!--  Controls are self-explanatory. Order can be changed. -->
+
+                                    <div class="pswp__counter"></div>
+
+                                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                                    <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                                    <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                                    <div class="pswp__preloader">
+                                        <div class="pswp__preloader__icn">
+                                          <div class="pswp__preloader__cut">
+                                            <div class="pswp__preloader__donut"></div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                                    <div class="pswp__share-tooltip"></div> 
+                                </div>
+
+                                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                                </button>
+
+                                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                                </button>
+
+                                <div class="pswp__caption">
+                                    <div class="pswp__caption__center"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class='smallerdisplay'>
-                        <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=447315632&amp;single=true&amp;widget=false&chrome=false&amp;headers=false&range=A1:D18' width='300' height='250'></iframe>
-                     </div>
+
+                    <!--<h2 class="section-heading">Photos<br></h2>-->
+                    <div id='insta_images_eu_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin: 0 auto;">
+                        {% for item in insta_images_eu_init %}
+                            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
+                                    <img style="max-width:120px; " src="{{ item.thumb }}" itemprop="thumbnail" alt="Image description" />
+                                </a>
+                                <figcaption itemprop="caption description" style="display: none;">{{ item.caption }}</figcaption>
+                            </figure>
+                        {% endfor %}
+                    </div>
+                    <div id='insta_images_eu_link' >
+                        <br>
+                        <p>
+                            <a onclick="show_all_images('insta_images_eu')">See all Europe Photos</a>
+                        </p>
+                    </div>
+                    <div id='insta_images_eu_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                        {% for item in insta_images_eu_all %}
+                            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
+                                    <img style="max-width:120px; " src="{{ item.thumb }}" itemprop="thumbnail" alt="Image description" />
+                                </a>
+                                <figcaption itemprop="caption description" style="display: none;">{{ item.caption }}</figcaption>
+                            </figure>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
 
@@ -321,20 +442,48 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                <div class="col-lg-5 col-sm-5">
                    <!-- <hr class="section-heading-spacer"> -->
                     <div class="clearfix"></div>
-                    <h2 class="section-heading">Southeast Asia 2015-2016</h2>
+                    <h2 class="section-heading">Southeast Asia+ 2015-2016</h2>
                     <p class="lead">Monkeying around on the world's best beaches. </p>
-                    <img src=/static/img/sea.jpg width=80% class='country_images'>
-                </div>
-                <br><br>
-                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                    <img src='{{ gmaps_sea }}' align=center width='100%' style="border-radius: 10px;">
+                    <br><br>
                     <div class='largerdisplay'>
-                         <iframe align=top src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1943952629&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='590' height='400'></iframe>
+                         <iframe align=top src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1943952629&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='460' height='550'></iframe>
                     </div>
                     <div class='smallerdisplay'>
-                         <iframe align=top src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1943952629&amp;single=true&amp;widget=false&chrome=false&amp;headers=false&range=A1:D18' width='300' height='400'></iframe>
+                         <iframe align=top src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1943952629&amp;single=true&amp;widget=false&chrome=false&amp;headers=false&range=A1:D18' width='300' height='550'></iframe>
+                    </div>
+                    <!--<img src=/static/img/sea.jpg width=80% class='country_images'>-->
+                </div>
+                <br><br>
+                <div class="col-lg-7 col-sm-7">
+                    <div id='insta_images_sea_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin: 0 auto;">
+                        {% for item in insta_images_sea_init %}
+                            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
+                                    <img style="max-width:120px; " src="{{ item.thumb }}" itemprop="thumbnail" alt="Image description" />
+                                </a>
+                                <figcaption itemprop="caption description" style="display: none;">{{ item.caption }}</figcaption>
+                            </figure>
+                        {% endfor %}
+                    </div>
+                    <div id='insta_images_sea_link' >
+                        <br>
+                        <p>
+                            <a onclick="show_all_images('insta_images_sea')">See all Asia Photos</a>
+                        </p>
+                    </div>
+                    <div id='insta_images_sea_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                        {% for item in insta_images_sea_all %}
+                            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
+                                    <img style="max-width:120px; " src="{{ item.thumb }}" itemprop="thumbnail" alt="Image description" />
+                                </a>
+                                <figcaption itemprop="caption description" style="display: none;">{{ item.caption }}</figcaption>
+                            </figure>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -352,23 +501,56 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-lg-5 col-sm-6">
+                <div class="col-lg-5 col-sm-5">
                     <!--hr class="section-heading-spacer">-->
                     <div class="clearfix"></div>
-                    <h2 class="section-heading">Roadtripping National Parks 2015</h2>
-                    <p class="lead">There's no better way to glamp your way around our national parks than with a mini-cooper convertible!</p>
+                    <h2 class="section-heading">USA and Canada</h2>
+                    <p class="lead">Camping (read: glamping) the left coast's national parks, hopping the border to Canada, and visiting friends and family across the country</p>
+
+                    <img src='{{ gmaps_us }}' align=center width='100%' style="border-radius: 10px;">
+
+                    <br><br>
+                    <div class='largerdisplay'>
+                         <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1377601369&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='460' height='1050'></iframe>
+                    </div>
+                    <div class='smallerdisplay'>
+                         <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1377601369&amp;single=true&amp;widget=false&chrome=false&amp;headers=false&range=A1:D44' width='300' height='1050'></iframe>
+                    </div>
+
+                    <!--
                     <p>
                     <img src=/static/img/na.jpg width=100% class='country_images'>
                     <br><br>
                     <img src=/static/img/narrows.jpg width=100% class='country_images'></p>
+                    -->
                 </div>
                 <br><br>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <div class='largerdisplay'>
-                         <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1377601369&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='550' height='850'></iframe>
+                <div class="col-lg-7 col-sm-7">
+                       <div id='insta_images_us_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin: 0 auto;">
+                        {% for item in insta_images_us_init %}
+                            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
+                                    <img style="max-width:120px; " src="{{ item.thumb }}" itemprop="thumbnail" alt="Image description" />
+                                </a>
+                                <figcaption itemprop="caption description" style="display: none;">{{ item.caption }}</figcaption>
+                            </figure>
+                        {% endfor %}
                     </div>
-                    <div class='smallerdisplay'>
-                         <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1377601369&amp;single=true&amp;widget=false&chrome=false&amp;headers=false&range=A1:D44' width='300' height='850'></iframe>
+                    <div id='insta_images_us_link' >
+                        <br>
+                        <p>
+                            <a onclick="show_all_images('insta_images_us')">See all US Photos</a>
+                        </p>
+                    </div>
+                    <div id='insta_images_us_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                        {% for item in insta_images_us_all %}
+                            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
+                                    <img style="max-width:120px; " src="{{ item.thumb }}" itemprop="thumbnail" alt="Image description" />
+                                </a>
+                                <figcaption itemprop="caption description" style="display: none;">{{ item.caption }}</figcaption>
+                            </figure>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -732,11 +914,32 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 initPhotoSwipeFromDOM('.my-gallery');
 
 function toggleSlideShow() {
-
     var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
     gallery.init();
+}
+
+//Hide initial images and show all images instead
+function show_all_images(elem) {
+    console.log(elem);
+    document.getElementById(elem + "_link").remove();
+    document.getElementById(elem + "_init").remove();
+    //document.getElementById(elem + "_all").style.display = "block";
+    //document.getElementById(elem + "_init").style.visibility = "hidden";
+    document.getElementById(elem + "_all").style.display = "block";
+    //document.getElementById("my-element").remove();
 
 
+}
+
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
 }
 
 </script>

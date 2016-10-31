@@ -1,6 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
+print "Loading views.py ..."
+
+
+"""
+Plan
+- Get Older Pictures Working Locally
+- Get Older Pictures on Git -> Website
+- Git: instascrape and instascrapeapi
+
+> Combine old and new
+> Fix location from foursquare
+> Location maps?
+"""
+
 import os
 import datetime
 import random
@@ -14,6 +29,16 @@ from werkzeug.utils import secure_filename
 requests.packages.urllib3.disable_warnings()
 import sys
 from the500days import app
+from models import db, InstaMediaAsset
+import numpy as np 
+
+
+from sqlalchemy import UniqueConstraint, distinct, func
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.sql import text
+from flaskext.mysql import MySQL
+import MySQLdb
+
 
 # Required for correct utf8 encoding calls from heroku
 reload(sys)
@@ -31,18 +56,96 @@ def show_entries():
 
     #insta_images= instagram_data['images']
     #insta_locations= instagram_data['image_locations']
-    insta_images = get_insta_photos()
+    #insta_images = get_insta_photos()
+
+    #Fetch Photos
+    insta_images_us_init = get_photos_from_db('2015-07-07', '2015-09-01')
+    insta_images_us_all = get_photos_from_db('2015-07-07', '2015-10-01')
+    insta_images_sea_init = get_photos_from_db('2015-10-05', '2015-11-02')
+    insta_images_sea_all = get_photos_from_db('2015-10-05', '2016-05-14')
+    insta_images_eu_init = get_photos_from_db('2016-05-17', '2016-06-15')
+    insta_images_eu_all = get_photos_from_db('2016-05-17', '2016-10-07')
+    insta_images_rr_init = get_photos_from_db('2016-10-07', '2016-10-16')
+    insta_images_rr_all = get_photos_from_db('2016-10-07', '2016-12-31')
+    top_photos = get_photos_from_db('2016-05-16', '2016-06-07', get_top_images=True)
+
+    #Fetch Google Maps Images with Locations
+    gmaps_us  = get_static_map_multiple_makers('2015-07-07', '2015-10-04', 3.8, '39.0558, -95.6890' )
+    gmaps_eu  = get_static_map_multiple_makers('2016-05-16', '2016-10-07', 4, '40.1209,9.0129'   )
+    gmaps_sea = get_static_map_multiple_makers('2015-10-05', '2016-05-14', 4, '10.8231,106.6297' )
+    #gmaps_all = get_static_map_multiple_makers('2015-07-07', '2016-12-31', 1, '10.8231,106.6297' )
+
 
     #print insta_locations
     
-    return render_template('index2.html', num_days_into_trip=num_days_into_trip, location=location, gmaps_url=gmaps_url, images = insta_images)
+    return render_template('index2.html', num_days_into_trip=num_days_into_trip, location=location, gmaps_url=gmaps_url, \
+                            insta_images_eu_init=insta_images_eu_init, insta_images_eu_all=insta_images_eu_all, \
+                            insta_images_sea_init=insta_images_sea_init, insta_images_sea_all=insta_images_sea_all, \
+                            insta_images_us_init=insta_images_us_init, insta_images_us_all=insta_images_us_all, \
+                            insta_images_rr_init=insta_images_rr_init, insta_images_rr_all=insta_images_rr_all, 
+                            top_photos=top_photos, gmaps_us=gmaps_us, gmaps_eu=gmaps_eu, gmaps_sea=gmaps_sea) #, gmaps_all=gmaps_all)
+
+@app.route('/dbphotos')
+def get_photos_from_db(start_date, end_date, **keyword_parameters):
+    image_dir = '/static/img/insta/'
+    images = []
+
+    if ('get_top_images' in keyword_parameters):
+        media = InstaMediaAsset.query.order_by(InstaMediaAsset.likes.desc()).limit(18).all()
+    else:
+        media = InstaMediaAsset.query.filter(InstaMediaAsset.created_date.between(start_date, end_date)).order_by(InstaMediaAsset.travel_day_nbr)
+        
+
+    for m in media:
+        item = dict(
+            video_url = m.video_url,
+            thumb = image_dir + str(m.id) + "_thumb.jpg",
+            thumb_width = m.thumb_width,
+            thumb_height = m.thumb_height,
+            full = image_dir + str(m.id) + ".jpg",
+            full_width = m.full_width,
+            full_height = m.full_height,
+            caption = m.caption
+        )
+        images.append(item)
+
+    return images
+
+
+def get_static_map_multiple_makers(start_date, end_date, zoom, center_coords):
+
+    #Get Lat Long Locations
+    media = InstaMediaAsset.query.filter(InstaMediaAsset.created_date.between(start_date, end_date))
+    locations = []
+    for m in media:
+        if m.latitude and m.longitude:
+            item = dict(
+                latitude = m.latitude,
+                longitude = m.longitude
+            )
+            locations.append(item)
+
+    locations=list(np.unique(np.array(locations)))
+
+    api_key = 'AIzaSyDoemInMQhCNVqELI9R58ass8f7MnzvjPM' 
+    gmaps_url = 'https://maps.googleapis.com/maps/api/staticmap?center=%s&zoom=%s&size=460x360&maptype=roadmap&key=%s' % (center_coords, zoom, api_key)
+
+    for l in locations:
+        gmaps_url = gmaps_url + '&markers=size:small|' + str(l['latitude']) + ',' + str(l['longitude'])
+
+    #print ("Problem getting map from gmaps api")
+    print "Multiple Makers Google Map URL: ", gmaps_url
+    return gmaps_url
+
+    
 
 def get_static_google_map(location):
     lat = location['latitude']
     long = location['longitude']
     api_key = 'AIzaSyDoemInMQhCNVqELI9R58ass8f7MnzvjPM' 
-    gmaps_url = 'https://maps.googleapis.com/maps/api/staticmap?center=%s,%s&zoom=6&size=400x300&maptype=roadmap&markers=color:red%%7C%s,%s&key=%s' % (lat, long, lat, long, api_key)
+    gmaps_url = 'https://maps.googleapis.com/maps/api/staticmap?center=%s,%s&zoom=6&size=300x200&maptype=roadmap&markers=color:red%%7C%s,%s&key=%s' % (lat, long, lat, long, api_key)
     #print ("Problem getting map from gmaps api")
+    print "Current Location Google Map URL: ", gmaps_url
     return gmaps_url
 
 # Returns the number of days we've been on the road
@@ -71,6 +174,8 @@ def get_insta_photos():
     print "\r\nGetting images from instagram api : \r\n", 
     print url
 
+
+
     try: 
         r = requests.get(url)
         r_json = r.json()
@@ -83,12 +188,11 @@ def get_insta_photos():
                 thumb = media['images']['thumbnail']['url'],
                 thumb_width = media['images']['standard_resolution']['width'],
                 thumb_height = media['images']['standard_resolution']['height'],
-                standard = media['images']['standard_resolution']['url'],
-                standard_width = media['images']['standard_resolution']['width'],
-                standard_height = media['images']['standard_resolution']['height'],
+                full = media['images']['standard_resolution']['url'],
+                full_width = media['images']['standard_resolution']['width'],
+                full_height = media['images']['standard_resolution']['height'],
 
                 caption = media['caption']['text']#,
-
             )
             images.append(item) 
 
@@ -137,6 +241,8 @@ def get_location_from_last_foursquare_checkin():
         latitude = lat_long_list[0]
         longitude = lat_long_list[1]
 
+
+
         print "--- From FS API latitude: ", latitude
         print "--- From FS API longitude: ", longitude
         print ""
@@ -148,18 +254,25 @@ def get_location_from_last_foursquare_checkin():
         try: 
             r = requests.get(googlemaps_url)
             g_json = r.json()
+            city = None
+            country = None
 
             for datums in g_json['results'][0]['address_components']:
                 if datums['types'][0] == 'locality':
                     city = datums['long_name']
                     print "--- From Google Lat Long API, City: ", city
-                else:
-                    city = None
+                    break
+                if datums['types'][0] == 'administrative_area_level_1':
+                    city = datums['long_name']
+                    print "--- From Google Lat Long API, City: ", country   
+                    break
+
+            for datums in g_json['results'][0]['address_components']:
                 if datums['types'][0] == 'country':
                     country = datums['long_name']
-                    print "--- From Google Lat Long API, Country: ", country
-                else: 
-                    country = None
+                    print "--- From Google Lat Long API, Country: ", country   
+                    break
+
 
         except Exception as e:
             print "--- Could not get data from google api: ", e.message, e.args
@@ -178,4 +291,5 @@ def get_location_from_last_foursquare_checkin():
         venue = None
 
     location = {'city': city, 'country': country, 'latitude': latitude, 'longitude': longitude, 'venue': venue}
+    print "Current location is :", location
     return location

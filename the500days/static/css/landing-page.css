@@ -41,6 +41,42 @@ a.gallerypic span.zoom-icon{
 
 }
 
+input[type="button"], input[type="button"]:focus, input[type="button"]:active,  
+button, button:focus, button:active {
+    /* Remove all decorations to look like normal text */
+    background: none;
+    border: none;
+    display: inline;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    outline-offset: 0;
+    /* Additional styles to look like a link */
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+/* Remove extra space inside buttons in Firefox */
+input[type="button"]::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: none;
+    padding: 0;
+}
+
+#insta_images_eu_link, #insta_images_sea_link, #insta_images_us_link, #insta_images_rr_link  {
+    display: block;
+}
+
+#insta_images_eu_init, #insta_images_sea_init, #insta_images_us_init, #insta_images_rr_init {
+    display: block;
+}
+
+#insta_images_eu_all, #insta_images_sea_all, #insta_images_us_all, #insta_images_rr_all {
+    width: 100%; 
+    margin: 0 auto; 
+    display: none;
+}
 
 
 .sociallogo {

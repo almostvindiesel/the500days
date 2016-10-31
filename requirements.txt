@@ -9,3 +9,8 @@ wheel==0.24.0
 psycopg2
 requests
 xmltodict
+flask-sqlalchemy
+flask-mysql
+mysql-python
+Cython
+numpy
