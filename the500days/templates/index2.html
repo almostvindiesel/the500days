@@ -276,7 +276,7 @@
                             <a onclick="show_all_images('insta_images_rr')">See all Wind Down Photos</a>
                         </p>
                     </div>
-                    <div id='insta_images_rr_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                    <div id='insta_images_rr_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="display: none;">
                         {% for item in insta_images_rr_all %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -415,7 +415,7 @@
                             <a onclick="show_all_images('insta_images_eu')">See all Europe Photos</a>
                         </p>
                     </div>
-                    <div id='insta_images_eu_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                    <div id='insta_images_eu_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery"  style="display: none;">
                         {% for item in insta_images_eu_all %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -475,7 +475,7 @@
                             <a onclick="show_all_images('insta_images_sea')">See all Asia Photos</a>
                         </p>
                     </div>
-                    <div id='insta_images_sea_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                    <div id='insta_images_sea_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="display: none;">
                         {% for item in insta_images_sea_all %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -542,7 +542,7 @@
                             <a onclick="show_all_images('insta_images_us')">See all US Photos</a>
                         </p>
                     </div>
-                    <div id='insta_images_us_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                    <div id='insta_images_us_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="display: none;">
                         {% for item in insta_images_us_all %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
