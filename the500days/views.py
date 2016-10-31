@@ -70,7 +70,7 @@ def show_entries():
     top_photos = get_photos_from_db('2016-05-16', '2016-06-07', get_top_images=True)
 
     #Fetch Google Maps Images with Locations
-    gmaps_us  = get_static_map_multiple_makers('2015-07-07', '2015-10-04', 3.8, '39.0558, -95.6890' )
+    gmaps_us  = get_static_map_multiple_makers('2015-07-07', '2015-10-04', 4, '39.0558, -95.6890' )
     gmaps_eu  = get_static_map_multiple_makers('2016-05-16', '2016-10-07', 4, '40.1209,9.0129'   )
     gmaps_sea = get_static_map_multiple_makers('2015-10-05', '2016-05-14', 4, '10.8231,106.6297' )
     #gmaps_all = get_static_map_multiple_makers('2015-07-07', '2016-12-31', 1, '10.8231,106.6297' )
@@ -166,10 +166,10 @@ if __name__ == '__main__':
 @app.route('/insta')
 def get_insta_photos():
 
-    access_token = '42490049.fc522f8.11667271a4984f93a7803ffdec6497cf'
+    access_token = app.config['INSTAGRAM_ACCESS_TOKEN']
     max_id = ''
     url = 'https://api.instagram.com/v1/users/42490049/media/recent/?access_token=%s&&max_id=%s' % (access_token, max_id)
-    # https://api.instagram.com/v1/users/42490049/media/recent/?access_token=42490049.fc522f8.11667271a4984f93a7803ffdec6497cf
+    # https://api.instagram.com/v1/users/42490049/media/recent/?access_token=
 
     print "\r\nGetting images from instagram api : \r\n", 
     print url
