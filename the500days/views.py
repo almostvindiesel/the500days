@@ -30,6 +30,8 @@ requests.packages.urllib3.disable_warnings()
 import sys
 from the500days import app
 from models import db, InstaMediaAsset
+from charts import *
+
 import numpy as np 
 
 
@@ -43,6 +45,11 @@ import MySQLdb
 # Required for correct utf8 encoding calls from heroku
 reload(sys)
 sys.setdefaultencoding("utf-8")
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?R#LDK'
+
+
+
+
 
 @app.route('/500days')
 @app.route('/')
@@ -70,9 +77,11 @@ def show_entries():
     top_photos = get_photos_from_db('2016-05-16', '2016-06-07', get_top_images=True)
 
     #Fetch Google Maps Images with Locations
-    gmaps_us  = get_static_map_multiple_makers('2015-07-07', '2015-10-04', 3, '39.0558, -95.6890' )
-    gmaps_eu  = get_static_map_multiple_makers('2016-05-16', '2016-10-07', 4, '40.1209,9.0129'   )
-    gmaps_sea = get_static_map_multiple_makers('2015-10-05', '2016-05-14', 4, '8.8231,106.6297' )
+    gmaps_us  = get_static_map_multiple_makers('2015-07-07', '2015-10-04', 3, '39, -95.7' )
+    gmaps_eu  = get_static_map_multiple_makers('2016-05-16', '2016-10-07', 4, '46,9'   )
+    gmaps_sea = get_static_map_multiple_makers('2015-10-05', '2016-05-14', 4, '10,111' )
+    gmaps_sea = gmaps_sea + "&markers=size:small|25.0854061,121.5632492"
+    #gmaps_cities_visited = get_static_map_cities_visited(6, '20.5,-157.3')
     #gmaps_all = get_static_map_multiple_makers('2015-07-07', '2016-12-31', 1, '10.8231,106.6297' )
 
 
@@ -82,8 +91,9 @@ def show_entries():
                             insta_images_eu_init=insta_images_eu_init, insta_images_eu_all=insta_images_eu_all, \
                             insta_images_sea_init=insta_images_sea_init, insta_images_sea_all=insta_images_sea_all, \
                             insta_images_us_init=insta_images_us_init, insta_images_us_all=insta_images_us_all, \
-                            insta_images_rr_init=insta_images_rr_init, insta_images_rr_all=insta_images_rr_all, 
-                            top_photos=top_photos, gmaps_us=gmaps_us, gmaps_eu=gmaps_eu, gmaps_sea=gmaps_sea) #, gmaps_all=gmaps_all)
+                            insta_images_rr_init=insta_images_rr_init, insta_images_rr_all=insta_images_rr_all, \
+                            top_photos=top_photos, gmaps_us=gmaps_us, gmaps_eu=gmaps_eu, gmaps_sea=gmaps_sea)
+                            #gmaps_cities_visited=gmaps_cities_visited) #, gmaps_all=gmaps_all)
 
 @app.route('/dbphotos')
 def get_photos_from_db(start_date, end_date, **keyword_parameters):
@@ -137,7 +147,30 @@ def get_static_map_multiple_makers(start_date, end_date, zoom, center_coords):
     print "Multiple Makers Google Map URL: ", gmaps_url
     return gmaps_url
 
-    
+def get_static_map_cities_visited(zoom, center_coords):
+
+    sql =  "select latitude, longitude from instascrape.cities_visited where country='USA'"
+    result = db.engine.execute(sql)
+    locations  = []
+    for row in result:
+        item = dict(
+            latitude = row[0],
+            longitude = row[1]
+        )
+        locations.append(item)
+
+    locations=list(np.unique(np.array(locations)))
+
+    api_key = 'AIzaSyDoemInMQhCNVqELI9R58ass8f7MnzvjPM' 
+    gmaps_url = 'https://maps.googleapis.com/maps/api/staticmap?center=%s&zoom=%s&size=300x300&maptype=roadmap&key=%s' % (center_coords, zoom, api_key)
+
+    for l in locations:
+        gmaps_url = gmaps_url + '&markers=size:small|' + str(l['latitude']) + ',' + str(l['longitude'])
+
+    #print ("Problem getting map from gmaps api")
+    print "Multiple Makers Google Map URL: ", gmaps_url
+    return gmaps_url
+
 
 def get_static_google_map(location):
     lat = location['latitude']

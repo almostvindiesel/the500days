@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+
+<head>
+  <title>Charting Playground</title>
+     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+
+     <script src="/static/js/Chart-2.3.0.js"></script>
+     <script src="/static/js/jquery-2.2.4.min.js"></script>
+
+     <script src="/static/js/jquery.tokenize.js"></script>
+     <link  href="/static/css/jquery.tokenize.css" rel="stylesheet" />
+  <style>
+
+  #daucontainer {
+
+  }
+
+  #first, #second, #third, #fourth {
+    float: left;
+  }
+
+  #clear {
+    clear: both;
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  label {
+    display: inline-block;
+    width: 50px;
+    text-align: right;
+  }​
+
+  .tdlabel {
+    vertical-align: top !important; 
+  }
+
+  .age_range-input { 
+    width: 170px;
+  }
+
+  .gender-input { 
+    width: 150px;
+  }
+
+  .country-input { 
+    width: 400px;
+  }
+
+  ul.TokensContainer {
+    height: 30px !important;
+  }
+
+
+
+  </style>
+</head>
+
+  <body>
+    <br>
+    <div class="row" >
+      <div class="col-md-3" style="vertical-align: middle; text-align: left;">
+        Genders: 
+        <select class="gender-input" multiple>
+        {% for datum in genders %}
+          <option value="{{ datum.gender }}" {{ datum.selected }}>{{ datum.gender }}</option>
+        {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3" style="vertical-align: middle; text-align: left;">
+        Age: 
+        <select class="age_range-input" multiple>
+          {% for datum in age_ranges %}
+            <option value="{{ datum.age_range }}" {{ datum.selected }}>{{ datum.age_range }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-6" style="vertical-align: middle; text-align: left;">
+        Countries: 
+        <select class="country-input" multiple>
+          {% for datum in countries %}
+            <option value="{{ datum.country }}" {{ datum.selected }}>{{ datum.country }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+
+
+
+    <div id='daucontainer'>
+      <div id='first'> 
+        <h3>Country DAU</h3>
+        <canvas id="countrydau" width=300 height=600></canvas>
+      </div>
+      <div id='second'> 
+        <h3>Country Mobile Penetration </h3>
+        <canvas id="countrypenetration" width=300 height=600></canvas>
+      </div>
+      <div id='third'> 
+        <h3>Age</h3>
+        <canvas id="agepct" width=300 height=370></canvas>
+      </div>
+      <div id='fourth'> 
+        <h3>Gender</h3>
+        <canvas id="genderpct" width=300 height=145></canvas>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+
+update_dash_with_filters()
+
+
+function update_dash_with_filters() {
+
+    var selected_age_ranges = [];
+    var age_ranges = [];
+    selected_age_ranges = $(".age_range-input>option:selected").map(function() { 
+      return $(this).val(); 
+    });
+    var selected_countries = [];
+    var countries = [];
+    selected_countries  = $(".country-input>option:selected").map(function() { 
+      return $(this).val(); 
+    });
+    var selected_genders = [];
+    var genders = [];
+    selected_genders   = $(".gender-input>option:selected").map(function() { 
+      return $(this).val(); 
+    });
+    for (i = 0; i < selected_age_ranges.length; i++) {
+      age_ranges[i] = selected_age_ranges[i];
+    }
+    for (i = 0; i < selected_genders.length; i++) {
+      genders[i] = selected_genders[i];
+    }
+    for (i = 0; i < selected_countries.length; i++) {
+      countries[i] = selected_countries[i];
+    }
+
+    //console.log(age_ranges);
+
+    $.post("/countrypenetration.json", { 
+        age_ranges: JSON.stringify(age_ranges),
+        countries: JSON.stringify(countries),
+        genders: JSON.stringify(genders)
+      },
+      function(data) {
+        countrypenetration(data);
+      }
+    );
+
+    $.post("/countrydau.json", { 
+        age_ranges: JSON.stringify(age_ranges),
+        countries: JSON.stringify(countries),
+        genders: JSON.stringify(genders)
+      },
+      function(data) {
+        countrydau(data);
+      }
+    );
+
+    $.post("/agepct.json", { 
+        age_ranges: JSON.stringify(age_ranges),
+        countries: JSON.stringify(countries),
+        genders: JSON.stringify(genders)
+      },
+      function(data) {
+        agepct(data);
+      }
+    );
+
+    $.post("/genderpct.json", { 
+        age_ranges: JSON.stringify(age_ranges),
+        countries: JSON.stringify(countries),
+        genders: JSON.stringify(genders)
+      },
+      function(data) {
+        genderpct(data);
+      }
+    );
+}
+
+
+
+</script>
+
+
+
+<script>
+
+/*
+http://stackoverflow.com/questions/31631354/how-to-display-data-values-on-chart-js
+displaying values
+*/
+
+Chart.defaults.global.tooltips = false;
+Chart.defaults.global.responsive = true;
+Chart.defaults.global.defaultFontColor = 'black';
+Chart.defaults.global.legend.display = false;
+
+/*
+$.getJSON("http://localhost:5000/agepct.json", function (json) {
+});
+$.getJSON("http://localhost:5000/genderpct.json", function (json) {  
+});
+$.getJSON("http://localhost:5000/countrydau.json", function (json) {
+});
+*/
+function countrydau(json) {
+
+  document.getElementById("countrydau").setAttribute("height", 50 + 50 * json.datasets[0].data.length);
+
+  var options = {
+    /*barWidth:20,
+    isFixedWidth:false,*/
+    scales: {
+      xAxes: [{
+          gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+          },
+          afterBuildTicks: function(myChart) {    
+            myChart.ticks = [];
+          }
+      }],
+      yAxes: [{
+          barThickness: 20,
+          gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+          } 
+      }]
+    },
+    events: false,
+    tooltips: {
+        enabled: false
+    },
+    hover: {
+        animationDuration: 0
+    },
+    animation: {
+        duration: 1,
+        onComplete: function () {
+            var chartInstance = this.chart,
+                ctx = chartInstance.ctx;
+            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            ctx.fillStyle = 'black';
+
+            this.data.datasets.forEach(function (dataset, i) {
+                var meta = chartInstance.controller.getDatasetMeta(i);
+                meta.data.forEach(function (bar, index) {
+                    var data = dataset.data[index];                            
+                    ctx.fillText(data.toLocaleString(), bar._model.x + 32, bar._model.y + 8);
+                });
+            });
+        }
+    }
+  }
+  var ctx = document.getElementById("countrydau").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: json,
+    options
+  });
+}
+
+function countrypenetration(json) {
+
+  document.getElementById("countrypenetration").setAttribute("height", 50 + 50 * json.datasets[0].data.length);
+
+  var options = {
+    showTooltips: false,
+    scales: {
+      xAxes: [{
+          gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+          },
+          afterBuildTicks: function(myChart) {    
+            myChart.ticks = [];
+          }
+      }],
+      yAxes: [{
+          barThickness: 20,
+          //barValueSpacing: 3,
+          gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+          } 
+      }]
+    },
+    events: false,
+    tooltips: {
+        enabled: false
+    },
+    hover: {
+        animationDuration: 0
+    },
+    animation: {
+        duration: 1,
+        onComplete: function () {
+            var chartInstance = this.chart,
+                ctx = chartInstance.ctx;
+            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            ctx.fillStyle = 'black';
+
+            this.data.datasets.forEach(function (dataset, i) {
+                var meta = chartInstance.controller.getDatasetMeta(i);
+                meta.data.forEach(function (bar, index) {
+                    var data = dataset.data[index] + '%';                            
+                    ctx.fillText(data, bar._model.x + 20, bar._model.y + 8);
+                });
+            });
+        }
+    }
+  }
+  var ctx = document.getElementById("countrypenetration").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: json,
+    options
+  });
+}
+
+function agepct(json) {
+
+  document.getElementById("agepct").setAttribute("height", 50 + 50 * json.datasets[0].data.length);
+
+  var options = {
+    showTooltips: false,
+    scales: {
+      xAxes: [{
+          gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+          },
+          afterBuildTicks: function(myChart) {    
+            myChart.ticks = [];
+          }
+      }],
+      yAxes: [{
+          barThickness: 20,
+          gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+          } 
+      }]
+    },
+    events: false,
+    tooltips: {
+        enabled: false
+    },
+    hover: {
+        animationDuration: 0
+    },
+    animation: {
+        duration: 1,
+        onComplete: function () {
+            var chartInstance = this.chart,
+                ctx = chartInstance.ctx;
+            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            ctx.fillStyle = 'black';
+
+            this.data.datasets.forEach(function (dataset, i) {
+                var meta = chartInstance.controller.getDatasetMeta(i);
+                meta.data.forEach(function (bar, index) {
+                    var data = dataset.data[index] + '%';                            
+                    ctx.fillText(data, bar._model.x + 20, bar._model.y + 8);
+                });
+            });
+        }
+    }
+  }
+  var ctx = document.getElementById("agepct").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: json,
+    options
+  });
+}
+
+function genderpct(json) {
+
+  document.getElementById("genderpct").setAttribute("height", 50 + 50 * json.datasets[0].data.length);
+
+  var options = {
+    showTooltips: false,
+    scales: {
+      xAxes: [{
+          gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+          },
+          afterBuildTicks: function(myChart) {    
+            myChart.ticks = [];
+          }
+      }],
+      yAxes: [{
+          barThickness: 20,
+          gridLines: {
+              color: "rgba(0, 0, 0, 0)",
+          } 
+      }]
+    },
+    events: false,
+    tooltips: {
+        enabled: false
+    },
+    hover: {
+        animationDuration: 0
+    },
+    animation: {
+        duration: 1,
+        onComplete: function () {
+            var chartInstance = this.chart,
+                ctx = chartInstance.ctx;
+            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            ctx.fillStyle = 'black';
+
+            this.data.datasets.forEach(function (dataset, i) {
+                var meta = chartInstance.controller.getDatasetMeta(i);
+                meta.data.forEach(function (bar, index) {
+                    var data = dataset.data[index] + '%';                            
+                    ctx.fillText(data, bar._model.x + 20, bar._model.y + 8);
+                });
+            });
+        }
+    }
+  }
+  var ctx = document.getElementById("genderpct").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: json,
+    options
+  });
+}
+
+$('.gender-input').tokenize({
+   placeholder: 'male or female',
+   onAddToken: function(value, text, e) {
+    update_dash_with_filters();
+   },
+   onRemoveToken: function(value, text, e) {
+    update_dash_with_filters();
+   }
+});
+
+$('.age_range-input').tokenize({
+   placeholder: 'Search for age range',
+   onAddToken: function(value, text, e) {
+    update_dash_with_filters();
+   },
+   onRemoveToken: function(value, text, e) {
+    update_dash_with_filters();
+   }
+});
+
+$('.country-input').tokenize({
+   placeholder: 'Search for a country',
+   onAddToken: function(value, text, e) {
+    update_dash_with_filters();
+   },
+   onRemoveToken: function(value, text, e) {
+    update_dash_with_filters();
+   }
+});
+
+
+
+
+
+</script>
