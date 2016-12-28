@@ -222,7 +222,7 @@
                     </div>
 
                     
-                    <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin: 0 auto;">
+                    <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin: 0 auto; margin-left: 40px;" >
                         {% for item in top_photos %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -250,7 +250,7 @@
                    <!-- <hr class="section-heading-spacer"> -->
                     <div class="clearfix"></div>
                     <h2 class="section-heading">Wind Down 2016</h2>
-                    <p class="lead">Beach bummin' in Cali, Bali,    and Down Under.</p>
+                    <p class="lead">Beach bummin' in Cali and Bali</p>
                          <div class='largerdisplay'>
                             <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=394029868&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='460' height='150'></iframe>
                         </div>
@@ -261,7 +261,8 @@
                 </div>
                 <br><br>
                 <div class="col-lg-7 col-sm-7">
-                    <div id='insta_images_rr_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin: 0 auto;">
+
+                    <div id='insta_images_rr_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin-left: 40px;">
                         {% for item in insta_images_rr_init %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -271,13 +272,13 @@
                             </figure>
                         {% endfor %}
                     </div>
-                    <div id='insta_images_rr_link' >
+                    <div id='insta_images_rr_link' style="margin-left: 40px;">
                         <br>
                         <p>
                             <a onclick="show_all_images('insta_images_rr')">See all Wind Down Photos</a>
                         </p>
                     </div>
-                    <div id='insta_images_rr_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="display: none;">
+                    <div id='insta_images_rr_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="display: none; margin-left: 40px;">
                         {% for item in insta_images_rr_all %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -400,7 +401,7 @@
                     </div>
 
                     <!--<h2 class="section-heading">Photos<br></h2>-->
-                    <div id='insta_images_eu_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin: 0 auto;">
+                    <div id='insta_images_eu_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin-left: 40px;">
                         {% for item in insta_images_eu_init %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -410,13 +411,13 @@
                             </figure>
                         {% endfor %}
                     </div>
-                    <div id='insta_images_eu_link' >
+                    <div id='insta_images_eu_link' style="margin-left: 40px;">
                         <br>
                         <p>
                             <a onclick="show_all_images('insta_images_eu')">See all Europe Photos</a>
                         </p>
                     </div>
-                    <div id='insta_images_eu_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery"  style="display: none;">
+                    <div id='insta_images_eu_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery"  style="display: none; margin-left: 40px;">
                         {% for item in insta_images_eu_all %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -460,7 +461,7 @@
                 </div>
                 <br><br>
                 <div class="col-lg-7 col-sm-7">
-                    <div id='insta_images_sea_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin: 0 auto;">
+                    <div id='insta_images_sea_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin-left: 40px;">
                         {% for item in insta_images_sea_init %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -470,13 +471,13 @@
                             </figure>
                         {% endfor %}
                     </div>
-                    <div id='insta_images_sea_link' >
+                    <div id='insta_images_sea_link' style="margin-left: 40px;">
                         <br>
                         <p>
                             <a onclick="show_all_images('insta_images_sea')">See all Asia Photos</a>
                         </p>
                     </div>
-                    <div id='insta_images_sea_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="display: none;">
+                    <div id='insta_images_sea_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="display: none; margin-left: 40px;">
                         {% for item in insta_images_sea_all %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -527,7 +528,7 @@
                 </div>
                 <br><br>
                 <div class="col-lg-7 col-sm-7">
-                       <div id='insta_images_us_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin: 0 auto;">
+                       <div id='insta_images_us_init' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="width: 100%; margin-left: 40px;">
                         {% for item in insta_images_us_init %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -537,13 +538,13 @@
                             </figure>
                         {% endfor %}
                     </div>
-                    <div id='insta_images_us_link' >
+                    <div id='insta_images_us_link' style="margin-left: 40px;">
                         <br>
                         <p>
                             <a onclick="show_all_images('insta_images_us')">See all US Photos</a>
                         </p>
                     </div>
-                    <div id='insta_images_us_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="display: none;">
+                    <div id='insta_images_us_all' class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery" style="display: none; margin-left: 40px;">
                         {% for item in insta_images_us_all %}
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                                 <a href="{{ item.full }}" itemprop="contentUrl" data-size="{{ item.full_width }}x{{ item.full_height }}">
@@ -634,7 +635,7 @@
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/jquery.easing.min.js"></script>
     <script src="/static/js/scrolling-script.js"></script>
-    <script src="/static/js/flexslider/jquery.flexslider.js"></script>
+    <!--<script src="/static/js/flexslider/jquery.flexslider.js"></script>-->
 
 
 

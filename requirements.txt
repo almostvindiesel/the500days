@@ -1,3 +1,4 @@
+mysql-python
 click==6.6
 Flask==0.11.1
 gunicorn==19.6.0
@@ -11,6 +12,5 @@ requests
 xmltodict
 flask-sqlalchemy
 flask-mysql
-mysql-python
 Cython
 numpy

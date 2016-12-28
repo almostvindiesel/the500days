@@ -1,319 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<meta charset="utf-8">
 
-<head>
-  <title>Charting Playground</title>
-     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+function create_or_update_charts() {
 
-     <script src="/static/js/Chart-2.3.0.js"></script>
-     <script src="/static/js/jquery-2.2.4.min.js"></script>
-
-     <script src="/static/js/jquery.tokenize.js"></script>
-     <link  href="/static/css/jquery.tokenize.css" rel="stylesheet" />
-     <link  href="/static/css/font-awesome.min.css" rel="stylesheet" />
-
-  <style>
-
-  #daucontainer {
-    width: 100%;
-  }
-
-
-  #first {
-    max-width: 300px;
-    max-height: 600px;
-  }
-
-  #second {
-    max-width: 300px;
-    max-height: 600px;
-  }
-
-  #third {
-    max-width: 300px;
-    max-height: 370px;
-  }
-
-  #fourth {
-    max-width: 250px;
-    max-height: 200px;
-  }
-
-  #fifth {
-    max-width: 250px;
-    max-height: 150px;
-  }
-
-  #first, #second, #third {
-    float: left;
-  }
-
-  #fifth {
-    display: inline-block;
-  }
-
-  #genderLegendsnapchat, #genderLegendinstagram {
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 13px;
-    text-align: center;
-  }
-
-  #clear {
-    clear: both;
-  }
-
-  h4.legendheader {
-    text-align: center;
-  }
-
-  label {
-    display: inline-block;
-    width: 50px;
-    text-align: right;
-  }​
-
-  .tdlabel {
-    vertical-align: top !important; 
-  }
-
-  .age_range-input { 
-    width: 200px;
-  }
-
-  .gender-input { 
-    width: 200px;
-  }
-
-  .country-input { 
-    width: 450px;
-  }
-
-  ul.TokensContainer {
-    height: 30px !important;
-  }
-
-hr { 
-  border : 0;
-  height: 1px; 
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); 
-}
-
-
-  </style>
-</head>
-
-  <body>
-    <br>    
-    <div class="row" >
-      <div class="col-md-3" style="vertical-align: middle; text-align: left;">
-      <label for="gender-input"><i class="fa fa-female fa-2x" aria-hidden="true"></i> <i class="fa fa-male fa-2x" aria-hidden="true"></i></label>
-        <select class="gender-input" multiple>
-        {% for datum in genders %}
-          <option value="{{ datum.gender }}" {{ datum.selected }}>{{ datum.gender }}</option>
-        {% endfor %}
-        </select>
-      </div>
-      <div class="col-md-3" style="vertical-align: middle; text-align: left;">
-        <label for="age_range-input"><i class="fa fa-child" aria-hidden="true"></i><i class="fa fa-child fa-2x"></i></label>
-        <select class="age_range-input" multiple>
-          {% for datum in age_ranges %}
-            <option value="{{ datum.age_range }}" {{ datum.selected }}>{{ datum.age_range }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="col-md-6" style="vertical-align: middle; text-align: left;">
-        <label for="country-input"><i class="fa fa-flag fa-2x" aria-hidden="true"></i></label>
-        <select class="country-input" multiple>
-          {% for datum in countries %}
-            <option value="{{ datum.country }}" {{ datum.selected }}>{{ datum.country }}</option>
-          {% endfor %}
-        </select>
-      </div>
-    </div>
-
-
-    <div id='daucontainer'>
-      <div class="row" >
-        <div class="col-md-3">
-          <div id='first'> 
-            <h4 class=legendheader><i class="fa fa-globe" aria-hidden="true"></i> Country DAU</h4>
-            <canvas id="countrydau"></canvas>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div id='second'> 
-            <h4 class=legendheader><i class="fa fa-mobile" aria-hidden="true"></i> Country Mobile Penetration </h4>
-            <canvas id="countrypenetration"></canvas>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div id='third'> 
-            <h4 class=legendheader><i class="fa fa-user" aria-hidden="true"></i> Age</h4>
-            <canvas id="agepct"></canvas>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div id='fourth'> 
-            <h4 class=legendheader><img src="/static/img/snap-icon.png" width=20> Gender</h4>
-            <hr>
-            <canvas id="genderpctsnapchat"></canvas>
-            <div id=genderLegendsnapchat></div>
-          </div>
-          <br><br><br><br><br>
-          <div id='fifth'> 
-            <h4 class=legendheader><img src="/static/img/insta-icon.png" width=20> Gender</h4>
-            <hr>
-            <canvas id="genderpctinstagram"></canvas><br>
-            <div id=genderLegendinstagram></div>
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="row" >
-       <div class="col-md-8 col-md-offset-1">
-       <h4>About this Dashboard</h4>
-       <p>This dashboard leverages publicly accessible data from the <a href=https://www.facebook.com/ads/create target='_blank'>Facebook Ads interface</a> as well as
-       media statements from Snap and Instagram on Daily Active Users to estimate dau and mobile market share by age, gender, and country</p>
-      </div>
-    </div>
-
-  </body>
-</html>
-
-<script>
-
-update_dash_with_filters()
-
-
-function update_dash_with_filters() {
+    // ------------------------------------------------------------------------
+    // Extract tokens for filtering dashboards
 
     var selected_age_ranges = [];
     var age_ranges = [];
     selected_age_ranges = $(".age_range-input>option:selected").map(function() { 
       return $(this).val(); 
     });
+    for (i = 0; i < selected_age_ranges.length; i++) {
+      age_ranges[i] = selected_age_ranges[i];
+    }
+
     var selected_countries = [];
     var countries = [];
     selected_countries  = $(".country-input>option:selected").map(function() { 
       return $(this).val(); 
     });
+    for (i = 0; i < selected_countries.length; i++) {
+      countries[i] = selected_countries[i];
+    }
+
     var selected_genders = [];
     var genders = [];
     selected_genders   = $(".gender-input>option:selected").map(function() { 
       return $(this).val(); 
     });
-
-
-    for (i = 0; i < selected_age_ranges.length; i++) {
-      age_ranges[i] = selected_age_ranges[i];
-    }
     for (i = 0; i < selected_genders.length; i++) {
       genders[i] = selected_genders[i];
     }
-    for (i = 0; i < selected_countries.length; i++) {
-      countries[i] = selected_countries[i];
-    }
 
-    //console.log(age_ranges);
 
-    $.post("/countrypenetration.json", { 
+    // ------------------------------------------------------------------------
+    // Hit API Endpoints to get json to generate dashboards
+
+    $.post("/daudash/api/countrypenetration.json", { 
         age_ranges: JSON.stringify(age_ranges),
         countries: JSON.stringify(countries),
         genders: JSON.stringify(genders)
       },
       function(data) {
-        countrypenetration(data);
+        create_country_penetration_chart(data);
       }
     );
 
-    $.post("/countrydau.json", { 
+    $.post("/daudash/api/countrydau.json", { 
         age_ranges: JSON.stringify(age_ranges),
         countries: JSON.stringify(countries),
         genders: JSON.stringify(genders)
       },
       function(data) {
-        countrydau(data);
+        create_country_dau_chart(data);
       }
     );
 
-    $.post("/agepct.json", { 
+    $.post("/daudash/api/agepct.json", { 
         age_ranges: JSON.stringify(age_ranges),
         countries: JSON.stringify(countries),
         genders: JSON.stringify(genders)
       },
       function(data) {
-        agepct(data);
+        create_age_pct_chart(data);
       }
     );
 
-    $.post("/genderpct.json", { 
+    $.post("/daudash/api/genderpct.json", { 
         age_ranges: JSON.stringify(age_ranges),
         countries: JSON.stringify(countries),
         genders: JSON.stringify(genders),
         measure: 'snapchat'
       },
       function(data) {
-        genderpct(data, 'snapchat');
+        create_gender_pct_chart(data, 'snapchat');
       }
     );
 
-    $.post("/genderpct.json", { 
+    $.post("/daudash/api/genderpct.json", { 
         age_ranges: JSON.stringify(age_ranges),
         countries: JSON.stringify(countries),
         genders: JSON.stringify(genders),
         measure: 'instagram'
       },
       function(data) {
-        genderpct(data, 'instagram');
+        create_gender_pct_chart(data, 'instagram');
       }
     );
-    /*
-    $.post("/genderpct.json", { 
-        age_ranges: JSON.stringify(age_ranges),
-        countries: JSON.stringify(countries),
-        genders: JSON.stringify(genders),
-        measure: 'instagram'
-      },
-      function(data) {
-        genderpct(data);
-      }
-    );
-    */
 }
 
-
-</script>
-
-
-
-<script>
-
-/*
-http://stackoverflow.com/questions/31631354/how-to-display-data-values-on-chart-js
-displaying values
-*/
-
+// Global Chart Defaults
 Chart.defaults.global.tooltips = false;
 Chart.defaults.global.responsive = true;
 Chart.defaults.global.defaultFontColor = 'black';
 Chart.defaults.global.legend.display = false;
-
-//??? should i keep aspect ratio?!?
 Chart.defaults.global.maintainAspectRatio = false;       
 
-/*
-$.getJSON("http://localhost:5000/agepct.json", function (json) {
-});
-$.getJSON("http://localhost:5000/genderpct.json", function (json) {  
-});
-$.getJSON("http://localhost:5000/countrydau.json", function (json) {
-});
-*/
-function countrydau(json) {
+
+// ------------------------------------------------------------------------
+// The following functions generate charts for each section
+// Reference: http://stackoverflow.com/questions/31631354/how-to-display-data-values-on-chart-js
+
+function create_country_dau_chart(json) {
 
   document.getElementById("countrydau").setAttribute("height", 50 + 50 * json.datasets[0].data.length);
-  document.getElementById("first").style.maxHeight = 50 + 50 * json.datasets[0].data.length + 'px';
+  document.getElementById("chartcol1").style.maxHeight = 50 + 50 * json.datasets[0].data.length + 'px';
 
 
   var options = {
@@ -371,10 +161,10 @@ function countrydau(json) {
   });
 }
 
-function countrypenetration(json) {
+function create_country_penetration_chart(json) {
  
   document.getElementById("countrypenetration").setAttribute("height", 50 + 50 * json.datasets[0].data.length);
-  document.getElementById("second").style.maxHeight = 50 + 50 * json.datasets[0].data.length + 'px';
+  document.getElementById("chartcol2").style.maxHeight = 50 + 50 * json.datasets[0].data.length + 'px';
 
   var options = {
     showTooltips: false,
@@ -431,11 +221,10 @@ function countrypenetration(json) {
   });
 }
 
-
-function agepct(json) {
+function create_age_pct_chart(json) {
 
   document.getElementById("agepct").setAttribute("height",  50 + 50 * json.datasets[0].data.length);
-  document.getElementById("third").style.maxHeight = 50 + 50 * json.datasets[0].data.length + 'px';
+  document.getElementById("chartcol3").style.maxHeight = 50 + 50 * json.datasets[0].data.length + 'px';
 
 
   var options = {
@@ -491,13 +280,12 @@ function agepct(json) {
   });
 }
 
-
-function genderpct(json, measure) {
+function create_gender_pct_chart(json, measure) {
 
   document.getElementById("genderpct" + measure).setAttribute("height", 50 + 50 * json.datasets[0].data.length);
-  document.getElementById("fourth").style.maxHeight = 50 + 50 * json.datasets[0].data.length + 'px';
+  document.getElementById("chartcol4" + measure).style.maxHeight = '150px';
 
-  function generateLegend() {
+  function generate_legend() {
     labels = json['labels'];
     values =  json['datasets'][0]['data'];
     bgColors = json['datasets'][0]['backgroundColor']
@@ -505,13 +293,8 @@ function genderpct(json, measure) {
     for (i = 0; i < labels.length; i++) { 
       legendHtml += '<span style="background-color:'+bgColors[i]+';">&nbsp;&nbsp&nbsp;&nbsp;&nbsp;</span> ' + labels[i] + ' (' + values[i] + '%) '
     }
-    console.log(legendHtml);
-    document.getElementById("genderLegend" + measure).innerHTML = legendHtml;
+    document.getElementById("genderlegend" + measure).innerHTML = legendHtml;
   }
-
-
-  console.log(json);
-  console.log(json['datasets'][0]['data']);
 
 
   var options = {
@@ -539,7 +322,7 @@ function genderpct(json, measure) {
             ctx.textBaseline = 'bottom';
             ctx.fillStyle = 'black';
 
-            generateLegend();
+            generate_legend();
         }
     }
   }
@@ -550,44 +333,4 @@ function genderpct(json, measure) {
     data: json,
     options  
   });
-
-
 }
-
-
-
-$('.gender-input').tokenize({
-   placeholder: 'genders, eg female',
-   onAddToken: function(value, text, e) {
-    update_dash_with_filters();
-   },
-   onRemoveToken: function(value, text, e) {
-    update_dash_with_filters();
-   }
-});
-
-$('.age_range-input').tokenize({
-   placeholder: 'age ranges, eg 18-24',
-   onAddToken: function(value, text, e) {
-    update_dash_with_filters();
-   },
-   onRemoveToken: function(value, text, e) {
-    update_dash_with_filters();
-   }
-});
-
-$('.country-input').tokenize({
-   placeholder: 'countries, eg united states',
-   onAddToken: function(value, text, e) {
-    update_dash_with_filters();
-   },
-   onRemoveToken: function(value, text, e) {
-    update_dash_with_filters();
-   }
-});
-
-
-
-
-
-</script>

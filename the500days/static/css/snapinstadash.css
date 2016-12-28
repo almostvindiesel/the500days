@@ -1,0 +1,74 @@
+.col1x {
+	width: 350px;
+}
+
+.col2x {
+	width: 650px;
+}
+
+#chartcol1, #chartcol2, #chartcol3 {
+	width: 350px;
+	float:left;
+	/*max-height: 1000px;*/
+}
+
+#chartcol4snapchat, #chartcol4instagram, {
+	width: 300px;
+	max-height: 300px;
+}
+
+.chartfooter {
+	float:left;
+}
+
+.clear {
+	clear:both;
+}
+
+#genderlegendinstagram, #genderlegendsnapchat {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;	
+	font-size: 13px;
+	text-align: center;
+}
+
+#clear {
+	clear: both;
+}
+
+
+h3.pagetitle {
+	text-align: center;
+}
+
+hr {
+    margin: 0;
+    padding: 1;
+}
+
+label {
+	display: inline-block;
+	width: 50px;
+	text-align: right;
+}​
+
+age_range-input { 
+	width: 200px;
+}
+
+.age_range-input, .gender-input { 
+	width: 200px;
+}
+
+.country-input { 
+	width: 500px;
+}
+
+ul.TokensContainer {
+	height: 30px !important;
+}
+
+hr { 
+	border : 0;
+	height: 1px; 
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); 
+}

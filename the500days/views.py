@@ -31,6 +31,7 @@ import sys
 from the500days import app
 from models import db, InstaMediaAsset
 from charts import *
+from snapinstadash import *
 
 import numpy as np 
 
