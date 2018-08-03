@@ -131,19 +131,26 @@
                         </a>
                     </h4>
                 </div>
-                <div class="col-lg-4 col-sm-offset-1 text-center">
+                <!--                 
+                <div class="col-lg-4 col-sm-offset-1 text-center">      
                     <h4>
-                        {% if location.city and location.country %}
+                        
+                        Removing as of Jul 2018
+                        {# {% if location.city and location.country %}
                             Now we're in 
                             <a target='_blank' href='https://www.google.es/maps/@{{ location.latitude }},{{ location.longitude }},14z?hl=en'>
                             {{ location.city }}, {{ location.country }}!</a><br><br>
-                        {% endif %}
+                            {% endif %} 
+                            #}
+                        
                         <img src='{{ gmaps_url }}' align=center style="width=100%; border-radius: 10px;">
                         <img src='{{ gmaps_cities_visited }}' align=center style="width=100%; border-radius: 10px;">
 
+
                         </div>
-                    </h4>
+                    </h4>                     
                 </div>
+                -->
             </div>
             <!-- /.row -->
         </div>
@@ -311,7 +318,7 @@
                     <p class="lead">
                         Loosen your belt. Bring your stretchy pants. Pack your Euro bathing suits. Europe is off for the summer and so are we! 
                     </p>
-                    <img src='{{ gmaps_eu }}' align=center width='100%' style="border-radius: 10px;">
+                    <img src='{{ gmaps_eu|safe }}' align=center width='100%' style="border-radius: 10px;">
                     <br><br>
                     <div class='largerdisplay'>
                         <iframe src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=447315632&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='460' height='325'></iframe>
@@ -449,7 +456,7 @@
                     <div class="clearfix"></div>
                     <h2 class="section-heading">Southeast Asia+ 2015-2016</h2>
                     <p class="lead">Monkeying around on the world's best beaches. </p>
-                    <img src='{{ gmaps_sea }}' align=center width='100%' style="border-radius: 10px;">
+                    <img src='{{ gmaps_sea|safe }}' align=center width='100%' style="border-radius: 10px;">
                     <br><br>
                     <div class='largerdisplay'>
                          <iframe align=top src='https://docs.google.com/spreadsheets/d/1jlaEdwPLIMpGjp70VuabVx-XttYs07B0EOIGS3_42BE/pubhtml?gid=1943952629&amp;single=true&amp;widget=false&chrome=false&amp;headers=false' width='460' height='550'></iframe>
@@ -471,7 +478,7 @@
                             </figure>
                         {% endfor %}
                     </div>
-                    <div id='insta_images_sea_link' style="margin-left: 40px;">
+                    <div id='insta_images_sea_link' style="margin-left: 40px;"g>
                         <br>
                         <p>
                             <a onclick="show_all_images('insta_images_sea')">See all Asia Photos</a>
@@ -509,7 +516,7 @@
                     <h2 class="section-heading">USA and Canada</h2>
                     <p class="lead">Glamping in the left coast's national parks, hopping the border to Canada, and visiting friends and family across the country.</p>
 
-                    <img src='{{ gmaps_us }}' align=center width='100%' style="border-radius: 10px;">
+                    <img src='{{ gmaps_us|safe }}' align=center width='100%' style="border-radius: 10px;">
 
                     <br><br>
                     <div class='largerdisplay'>

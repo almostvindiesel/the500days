@@ -50,7 +50,8 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?R#LDK'
 
 
 
-
+# Sheets... July 2018
+# https://docs.google.com/spreadsheets/d/e/2PACX-1vT0GDavBESaQwFNyEW3JyKWJxigJzDbQ3hZJQu6v0L1ZNIu_974y8vCRP2g0dt9MwHLZ6mnuoVrncPn/pubhtml
 
 @app.route('/500days')
 @app.route('/')
@@ -58,8 +59,8 @@ def show_entries():
     print '-'*50
 
     num_days_into_trip = days_into_trip()
-    location = get_location_from_last_foursquare_checkin()
-    gmaps_url = get_static_google_map(location)
+    # location = get_location_from_last_foursquare_checkin()
+    # gmaps_url = get_static_google_map(location)
     #instagram_data = get_insta_photos()
 
     #insta_images= instagram_data['images']
@@ -88,7 +89,7 @@ def show_entries():
 
     #print insta_locations
     
-    return render_template('index2.html', num_days_into_trip=num_days_into_trip, location=location, gmaps_url=gmaps_url, \
+    return render_template('index2.html', num_days_into_trip=num_days_into_trip,   \
                             insta_images_eu_init=insta_images_eu_init, insta_images_eu_all=insta_images_eu_all, \
                             insta_images_sea_init=insta_images_sea_init, insta_images_sea_all=insta_images_sea_all, \
                             insta_images_us_init=insta_images_us_init, insta_images_us_all=insta_images_us_all, \
@@ -138,8 +139,9 @@ def get_static_map_multiple_makers(start_date, end_date, zoom, center_coords):
 
     locations=list(np.unique(np.array(locations)))
 
-    api_key = 'AIzaSyDoemInMQhCNVqELI9R58ass8f7MnzvjPM' 
-    gmaps_url = 'https://maps.googleapis.com/maps/api/staticmap?center=%s&zoom=%s&size=460x460&maptype=roadmap&key=%s' % (center_coords, zoom, api_key)
+    # api_key = 'AIzaSyDoemInMQhCNVqELI9R58ass8f7MnzvjPM' 
+    api_key = 'AIzaSyAk0O6WvXNdeD1HB0fmytOjeJQX3ldg6mg' #July  2018
+    gmaps_url = 'http://maps.googleapis.com/maps/api/staticmap?center=%s&zoom=%s&size=460x460&maptype=roadmap&key=%s' % (center_coords, zoom, api_key)
 
     for l in locations:
         gmaps_url = gmaps_url + '&markers=size:small|' + str(l['latitude']) + ',' + str(l['longitude'])
@@ -162,8 +164,10 @@ def get_static_map_cities_visited(zoom, center_coords):
 
     locations=list(np.unique(np.array(locations)))
 
-    api_key = 'AIzaSyDoemInMQhCNVqELI9R58ass8f7MnzvjPM' 
-    gmaps_url = 'https://maps.googleapis.com/maps/api/staticmap?center=%s&zoom=%s&size=300x300&maptype=roadmap&key=%s' % (center_coords, zoom, api_key)
+    # api_key = 'AIzaSyDoemInMQhCNVqELI9R58ass8f7MnzvjPM' 
+    api_key = 'AIzaSyAk0O6WvXNdeD1HB0fmytOjeJQX3ldg6mg' #July  2018
+
+    gmaps_url = 'http://maps.googleapis.com/maps/api/staticmap?center=%s&zoom=%s&size=300x300&maptype=roadmap&key=%s' % (center_coords, zoom, api_key)
 
     for l in locations:
         gmaps_url = gmaps_url + '&markers=size:small|' + str(l['latitude']) + ',' + str(l['longitude'])
@@ -176,8 +180,11 @@ def get_static_map_cities_visited(zoom, center_coords):
 def get_static_google_map(location):
     lat = location['latitude']
     long = location['longitude']
-    api_key = 'AIzaSyDoemInMQhCNVqELI9R58ass8f7MnzvjPM' 
-    gmaps_url = 'https://maps.googleapis.com/maps/api/staticmap?center=%s,%s&zoom=6&size=300x200&maptype=roadmap&markers=color:red%%7C%s,%s&key=%s' % (lat, long, lat, long, api_key)
+
+    # api_key = 'AIzaSyDoemInMQhCNVqELI9R58ass8f7MnzvjPM' 
+    api_key = 'AIzaSyAk0O6WvXNdeD1HB0fmytOjeJQX3ldg6mg' #July  2018
+
+    gmaps_url = 'http://maps.googleapis.com/maps/api/staticmap?center=%s,%s&zoom=6&size=300x200&maptype=roadmap&markers=color:red%%7C%s,%s&key=%s' % (lat, long, lat, long, api_key)
     #print ("Problem getting map from gmaps api")
     print "Current Location Google Map URL: ", gmaps_url
     return gmaps_url
@@ -282,7 +289,7 @@ def get_location_from_last_foursquare_checkin():
         print ""
 
         #Get City from Google Maps API
-        googlemaps_url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false" % (latitude, longitude)
+        googlemaps_url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s&sensor=false" % (latitude, longitude)
         print "Getting location data from google maps api : \r\n", googlemaps_url
 
         try: 
